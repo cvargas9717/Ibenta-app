@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import PostingCard from './PostingCard';
-import { Collapse, Navbar,CardColumns,
-  Card,CardImg,CardText,CardBody,CardTitle,CardSubtitle,CardDeck,
+import { Collapse, Navbar, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText,
   NavbarToggler,
   NavbarBrand,
   Nav,
@@ -20,8 +18,8 @@ constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
-      modal: false,
-      modal2: false,
+      loginModal: false,
+      signUpModal: false,
       loginLabel: 'Log into account',
       signUpLabel: 'Sign Up'
     };
@@ -33,7 +31,7 @@ constructor(props) {
 
   toggleLoginModal() {
     this.setState({
-      modal: !this.state.modal
+      loginModal: !this.state.loginModal
     });
 
     const url = "http://ctp-zip-api.herokuapp.com/zip/90210";
@@ -42,7 +40,7 @@ constructor(props) {
       .then((result) => {
         if(result.ok){
           return result.json();
-        } else{
+        } else {
           return [];
         }
       })
@@ -54,7 +52,7 @@ constructor(props) {
 
   toggleSignUpModal() {
     this.setState({
-      modal2: !this.state.modal2
+      signUpModal: !this.state.signUpModal
     });
   }
 
@@ -71,34 +69,28 @@ constructor(props) {
 
     return (
       <div className="App">
+        <div>
+          <Navbar color="light" light expand="md">
+            <NavbarBrand href="/">Ibenta</NavbarBrand>
+            <NavbarToggler onClick={this.openNav} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <Button outline color="primary" onClick={this.toggleLoginModal}>{this.state.loginLabel}</Button>
+                <div className="divider"/>
+                  <Button color="success" onClick={this.toggleSignUpModal}>{this.state.signUpLabel}</Button>
 
-      <div>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Ibenta</NavbarBrand>
-          <NavbarToggler onClick={this.openNav} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <Button outline color="primary" onClick={this.toggleLoginModal}>{this.state.loginLabel}</Button>
-               <div class="divider"/>
-                <Button color="success" onClick={this.toggleSignUpModal}>{this.state.signUpLabel}</Button>
-
-              </NavItem>
+                </NavItem>
 
 
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </div>
-
+              </Nav>
+            </Collapse>
+          </Navbar>
+        </div>
 
 
 
-
-
-
-
-        <Modal isOpen={this.state.modal} toggle={this.toggleLoginModal} className={this.props.className}>
+          <Modal isOpen={this.state.loginModal} toggle={this.toggleLoginModal} className={this.props.className}>
 
             <ModalHeader toggle={this.toggleLoginModal}>Login</ModalHeader>
 
@@ -125,118 +117,118 @@ constructor(props) {
             </ModalBody>
           </Modal>
 
-          <Modal isOpen={this.state.modal2} toggle={this.toggleSignUpModal} className={this.props.className}>
+          <Modal isOpen={this.state.signUpModal} toggle={this.toggleSignUpModal} className={this.props.className}>
 
-              <ModalHeader toggle={this.toggleSignUpModal}>Sign Up for Free!</ModalHeader>
+            <ModalHeader toggle={this.toggleSignUpModal}>Sign Up for Free!</ModalHeader>
 
-              <ModalBody>
+            <ModalBody>
+                <Form>
+                    <FormGroup row>
+                      <Label for="" sm={3}>Username</Label>
+                      <Col sm={10}>
+                        <Input type="text" name="text" id="examplePassword"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label for="" sm={3}>First Name</Label>
+                      <Col sm={10}>
+                        <Input type="email" name="email" id="exampleEmail"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label for="" sm={3}>Last Name</Label>
+                      <Col sm={10}>
+                        <Input type="text" name="text" id="examplePassword"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label for="" sm={3}>Zip Code</Label>
+                      <Col sm={10}>
+                        <Input type="text" name="text" id="examplePassword"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label for="" sm={3}>Email</Label>
+                      <Col sm={10}>
+                        <Input type="email" name="text" id="examplePassword"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label for="" sm={4}>Confirm Email</Label>
+                      <Col sm={10}>
+                        <Input type="email" name="text" id="examplePassword"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label for="" sm={4}>Create Password</Label>
+                      <Col sm={10}>
+                        <Input type="email" name="text" id="examplePassword"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label for="" sm={4}>Confirm Password</Label>
+                      <Col sm={10}>
+                        <Input type="email" name="text" id="examplePassword"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label for="" sm={5}>Upload Profile Picture</Label>
+                      <Col sm={10}>
+                        <Input type="file" name="text" id="examplePassword"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label for="" sm={6}>Upload Government Issued ID </Label>
+                      <Col sm={10}>
+                        <Input type="file" name="text" id="examplePassword"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup>
+                      <Col sm={10}>
+                        <Button color="success" onClick={this.toggle}>Create Account</Button>
+                      </Col>
+                    </FormGroup>
+                </Form>
+            </ModalBody>
+          </Modal>
 
-                  <Form>
-                      <FormGroup row>
-                        <Label for="" sm={3}>Username</Label>
-                        <Col sm={10}>
-                          <Input type="text" name="text" id="examplePassword"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="" sm={3}>First Name</Label>
-                        <Col sm={10}>
-                          <Input type="email" name="email" id="exampleEmail"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="" sm={3}>Last Name</Label>
-                        <Col sm={10}>
-                          <Input type="text" name="text" id="examplePassword"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="" sm={3}>Zip Code</Label>
-                        <Col sm={10}>
-                          <Input type="text" name="text" id="examplePassword"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="" sm={3}>Email</Label>
-                        <Col sm={10}>
-                          <Input type="email" name="text" id="examplePassword"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="" sm={4}>Confirm Email</Label>
-                        <Col sm={10}>
-                          <Input type="email" name="text" id="examplePassword"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="" sm={4}>Create Password</Label>
-                        <Col sm={10}>
-                          <Input type="email" name="text" id="examplePassword"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="" sm={4}>Confirm Password</Label>
-                        <Col sm={10}>
-                          <Input type="email" name="text" id="examplePassword"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="" sm={5}>Upload Profile Picture</Label>
-                        <Col sm={10}>
-                          <Input type="file" name="text" id="examplePassword"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="" sm={6}>Upload Government Issued ID </Label>
-                        <Col sm={10}>
-                          <Input type="file" name="text" id="examplePassword"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup>
-                        <Col sm={10}>
-                          <Button color="success" onClick={this.toggle}>Create Account</Button>
-                        </Col>
-                      </FormGroup>
-                  </Form>
-              </ModalBody>
-            </Modal>
-
-            <header className="App-header">
-
-        <CardDeck>
+        <header className="App-header">
+          <div className="row">
+            <div className="col-sm-4">
               <Card>
-              <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-              <CardBody>
-                <CardTitle>Card title</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                <CardText>Some quick example text to build on the card title and make up the bulk </CardText>
-                <Button>Button</Button>
-              </CardBody>
+                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                <CardBody>
+                  <CardTitle>Card title</CardTitle>
+                  <CardSubtitle>Card subtitle</CardSubtitle>
+                  <CardText>Some quick example text to build on the card title and make up the bulk o</CardText>
+                  <Button>Button</Button>
+                </CardBody>
               </Card>
-
+            </div>
+            <div className="col-sm-4">
               <Card>
-              <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-              <CardBody>
-                <CardTitle>Card title</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                <CardText>Some quick example text to build on the card title and make up the bulk </CardText>
-                <Button>Button</Button>
-              </CardBody>
+                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                <CardBody>
+                  <CardTitle>Card title</CardTitle>
+                  <CardSubtitle>Card subtitle</CardSubtitle>
+                  <CardText>Some quick example text to build on the card title and make up the bul</CardText>
+                  <Button>Button</Button>
+                </CardBody>
               </Card>
-
+            </div>
+            <div className="col-sm-4">
               <Card>
-              <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-              <CardBody>
-                <CardTitle>Card title</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                <Button>Button</Button>
-              </CardBody>
+                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                <CardBody>
+                  <CardTitle>Card title</CardTitle>
+                  <CardSubtitle>Card subtitle</CardSubtitle>
+                  <CardText>Some quick example text to build on the card title and make up the bu</CardText>
+                  <Button>Button</Button>
+                </CardBody>
               </Card>
-          </CardDeck>
-
-
-
-            </header>
+            </div>
+          </div>
+        </header>
 
 
       </div>
