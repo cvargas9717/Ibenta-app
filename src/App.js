@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Collapse, Navbar,
+import PostingCard from './PostingCard';
+import { Collapse, Navbar,CardColumns,
+  Card,CardImg,CardText,CardBody,CardTitle,CardSubtitle,CardDeck,
   NavbarToggler,
   NavbarBrand,
   Nav,
@@ -34,7 +36,7 @@ constructor(props) {
       modal: !this.state.modal
     });
 
-    const url = "http://ctp-zip-api.herokuapp.com/zip/10473";
+    const url = "http://ctp-zip-api.herokuapp.com/zip/90210";
 
     fetch(url)
       .then((result) => {
@@ -65,11 +67,11 @@ constructor(props) {
 
 
 
-
-
   render() {
+
     return (
       <div className="App">
+
       <div>
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">Ibenta</NavbarBrand>
@@ -80,55 +82,55 @@ constructor(props) {
                 <Button outline color="primary" onClick={this.toggleLoginModal}>{this.state.loginLabel}</Button>
                <div class="divider"/>
                 <Button color="success" onClick={this.toggleSignUpModal}>{this.state.signUpLabel}</Button>
-                      
+
               </NavItem>
-              
-       
+
+
             </Nav>
           </Collapse>
         </Navbar>
       </div>
-        
-
-        <header className="App-header">
-          
-          <Modal isOpen={this.state.modal} toggle={this.toggleLoginModal} className={this.props.className}>
-              
-              <ModalHeader toggle={this.toggleLoginModal}>Login</ModalHeader>
-              
-              <ModalBody>
-                  <Form>
-                      <FormGroup row>
-                        <Label for="exampleEmail" sm={2}>Email</Label>
-                        <Col sm={10}>
-                          <Input type="email" name="email" id="exampleEmail"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Label for="examplePassword" sm={2}>Password</Label>
-                        <Col sm={10}>
-                          <Input type="password" name="password" id="examplePassword"  />
-                        </Col>
-                      </FormGroup>
-                      <FormGroup>
-                        <Col sm={10}>
-                          <Button color="success" onClick={this.toggle}>Log in</Button>
-                        </Col>
-                      </FormGroup>  
-                  </Form>
-              </ModalBody>
-            </Modal>
-         
-        </header>
 
 
-        <header className="App-header">
-          
+
+
+
+
+
+
+        <Modal isOpen={this.state.modal} toggle={this.toggleLoginModal} className={this.props.className}>
+
+            <ModalHeader toggle={this.toggleLoginModal}>Login</ModalHeader>
+
+            <ModalBody>
+                <Form>
+                    <FormGroup row>
+                      <Label for="exampleEmail" sm={2}>Email</Label>
+                      <Col sm={10}>
+                        <Input type="email" name="email" id="exampleEmail"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Label for="examplePassword" sm={2}>Password</Label>
+                      <Col sm={10}>
+                        <Input type="password" name="password" id="examplePassword"  />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup>
+                      <Col sm={10}>
+                        <Button color="success" onClick={this.toggle}>Log in</Button>
+                      </Col>
+                    </FormGroup>
+                </Form>
+            </ModalBody>
+          </Modal>
+
           <Modal isOpen={this.state.modal2} toggle={this.toggleSignUpModal} className={this.props.className}>
-              
+
               <ModalHeader toggle={this.toggleSignUpModal}>Sign Up for Free!</ModalHeader>
-              
+
               <ModalBody>
+
                   <Form>
                       <FormGroup row>
                         <Label for="" sm={3}>Username</Label>
@@ -194,79 +196,50 @@ constructor(props) {
                         <Col sm={10}>
                           <Button color="success" onClick={this.toggle}>Create Account</Button>
                         </Col>
-                      </FormGroup>  
+                      </FormGroup>
                   </Form>
               </ModalBody>
             </Modal>
-         
-        </header>
+
+            <header className="App-header">
+
+        <CardDeck>
+              <Card>
+              <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+              <CardBody>
+                <CardTitle>Card title</CardTitle>
+                <CardSubtitle>Card subtitle</CardSubtitle>
+                <CardText>Some quick example text to build on the card title and make up the bulk </CardText>
+                <Button>Button</Button>
+              </CardBody>
+              </Card>
+
+              <Card>
+              <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+              <CardBody>
+                <CardTitle>Card title</CardTitle>
+                <CardSubtitle>Card subtitle</CardSubtitle>
+                <CardText>Some quick example text to build on the card title and make up the bulk </CardText>
+                <Button>Button</Button>
+              </CardBody>
+              </Card>
+
+              <Card>
+              <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+              <CardBody>
+                <CardTitle>Card title</CardTitle>
+                <CardSubtitle>Card subtitle</CardSubtitle>
+                <Button>Button</Button>
+              </CardBody>
+              </Card>
+          </CardDeck>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </header>
 
 
       </div>
-
-
-      // <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-              
-      //         <ModalHeader toggle={this.toggle}>Login</ModalHeader>
-              
-      //         <ModalBody>
-      //             <Form>
-      //                 <FormGroup row>
-      //                   <Label for="exampleEmail" sm={2}>Email</Label>
-      //                   <Col sm={10}>
-      //                     <Input type="email" name="email" id="exampleEmail"  />
-      //                   </Col>
-      //                 </FormGroup>
-      //                 <FormGroup row>
-      //                   <Label for="examplePassword" sm={2}>Password</Label>
-      //                   <Col sm={10}>
-      //                     <Input type="password" name="password" id="examplePassword"  />
-      //                   </Col>
-      //                 </FormGroup>
-
-      //                 <FormGroup>
-      //                   <Col sm={10}>
-      //                     <Button color="success" onClick={this.toggle}>Log in</Button>
-      //                   </Col>
-      //                 </FormGroup>
-      //             </Form>
-      //         </ModalBody>
-      //       </Modal>
-
-     
-
-
-
-     
-       
-   
-
-
-
-
-
 
     );
   }
