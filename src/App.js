@@ -68,6 +68,46 @@ class SearchField extends Component {
 	}
 }
 
+class SearchField extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			searchInput: '',
+			searchLabel: 'Search'
+		}
+	}
+
+  	searchBar = (event) => {
+  		const search = event.target.value;
+  		this.setState({searchInput: search});
+  	}
+
+  	searchClick(inputName) {
+  		console.log('searching for: ', inputName);
+  	}
+
+	render() {
+		return(
+			<div className="row">
+				<div className="col-md-9">
+					<Input
+						type= 'text'
+						id= 'searchBar'
+						className= 'search'
+						placeholder= 'Search for items'
+						onChange= {this.searchBar}
+					/>
+					
+				</div>
+				<div className="col-md-3">
+					<Button onClick = {(i) => this.searchClick(this.state.searchInput)}>{this.state.searchLabel}</Button>
+				</div>
+			</div>
+			);
+	}
+}
+
 class App extends Component {
 
 
