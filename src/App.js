@@ -12,6 +12,46 @@ import { Collapse, Navbar, Card, CardImg, CardBody, CardTitle, CardSubtitle, Car
   DropdownMenu,
   DropdownItem, Col, Form, FormGroup, Label, Input, FormText, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
+class SearchField extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			searchInput: '',
+			searchLabel: 'Search'
+		}
+	}
+
+  	searchBar = (event) => {
+  		const search = event.target.value;
+  		this.setState({searchInput: search});
+  	}
+
+  	searchClick(inputName) {
+  		console.log('searching for: ', inputName);
+  	}
+
+	render() {
+		return(
+			<div className="row">
+				<div className="col-md-9">
+					<Input
+						type= 'text'
+						id= 'searchBar'
+						className= 'search'
+						placeholder= 'Search for items'
+						onChange= {this.searchBar}
+					/>
+					
+				</div>
+				<div className="col-md-3">
+					<Button onClick = {(i) => this.searchClick(this.state.searchInput)}>{this.state.searchLabel}</Button>
+				</div>
+			</div>
+			);
+	}
+}
+
 class App extends Component {
 
 constructor(props) {
@@ -21,7 +61,9 @@ constructor(props) {
       loginModal: false,
       signUpModal: false,
       loginLabel: 'Log into account',
-      signUpLabel: 'Sign Up'
+      signUpLabel: 'Sign Up',
+      searchLabel: 'Search',
+      uploadLabel: 'Post Item'
     };
 
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
@@ -62,7 +104,9 @@ constructor(props) {
     });
   }
 
-
+  toggleUpload() {
+  	console.log('pretend you uploaded something');
+  }
 
 
 
@@ -73,10 +117,13 @@ constructor(props) {
         <div>
           <Navbar color="light" light expand="md">
             <NavbarBrand href="/">Ibenta</NavbarBrand>
+            <SearchField />
             <NavbarToggler onClick={this.openNav} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
+                  <Button color="danger" onClick={this.toggleUpload}>{this.state.uploadLabel}</Button>
+                  <div className="divider"/>
                   <Button outline color="primary" onClick={this.toggleLoginModal}>{this.state.loginLabel}</Button>
                 <div className="divider"/>
                   <Button color="success" onClick={this.toggleSignUpModal}>{this.state.signUpLabel}</Button>
