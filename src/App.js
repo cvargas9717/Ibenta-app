@@ -136,7 +136,6 @@ constructor(props) {
     });
   }
 
-<<<<<<< HEAD
   handleChange (event) {
     this.setState( [event.target.name]: event.target.value )
     console.log(event.target.value);
@@ -171,11 +170,6 @@ constructor(props) {
       //     console.log(res);
       //     console.log(res.data);
       //   });
-=======
-  toggleUpload() {
-  	console.log('pretend you uploaded something');
-  }
->>>>>>> 3c2e797... search bar created
 
   }
 
