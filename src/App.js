@@ -11,8 +11,26 @@ import { Collapse, Navbar, Card, CardImg, CardBody, CardTitle, CardSubtitle, Car
   DropdownToggle,
   DropdownMenu,
   DropdownItem, Col, Form, FormGroup, Label, Input, FormText, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import axios from 'axios';
+
+  const inputParsers = {
+    date(input) {
+      const [month, day, year] = input.split('/');
+      return `${year}-${month}-${day}`;
+    },
+    uppercase(input) {
+      return input.toUpperCase();
+    },
+    number(input) {
+      return parseFloat(input);
+    },
+  };
+
+
 
 class App extends Component {
+
+
 
 constructor(props) {
     super(props);
@@ -24,6 +42,8 @@ constructor(props) {
       signUpLabel: 'Sign Up'
     };
 
+
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
     this.toggleSignUpModal = this.toggleSignUpModal.bind(this);
     this.openNav = this.openNav.bind(this);
@@ -34,35 +54,82 @@ constructor(props) {
       loginModal: !this.state.loginModal
     });
 
-    const url = "http://ctp-zip-api.herokuapp.com/zip/90210";
+     //const url = "http://ctp-zip-api.herokuapp.com/zip/90210";
 
-    fetch(url)
-      .then((result) => {
-        if(result.ok){
-          return result.json();
-        } else {
-          return [];
-        }
-      })
-      .then((jsonResult) => {
-          console.log(jsonResult);
-      })
+    // fetch(url)
+    //   .then((result) => {
+    //     if(result.ok){
+    //       return result.json();
+    //     } else {
+    //       return [];
+    //     }
+    //   })
+    //   .then((jsonResult) => {
+    //       console.log(jsonResult);
+    //   })
+
+    fetch('http://localhost:8080/userInfo')
+    .then((result) => {
+      if(result.ok) {
+        return result.json();
+      }else {
+        return [];
+      }
+    })
+    .then((jsonResult) =>{
+      console.log(jsonResult);
+    })
 
   }
 
-  toggleSignUpModal() {
+  toggleSignUpModal(event) {
     this.setState({
       signUpModal: !this.state.signUpModal
     });
   }
 
-  openNav(){
+  openNav() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
 
+  handleChange (event) {
+    this.setState( [event.target.name]: event.target.value )
+    console.log(event.target.value);
+  }
 
+  handleSubmit(event) {
+    //event.preventDefault();
+      var userData = {
+          UserName: event.target.UserName.value,
+          FirstName: event.target.FirstName.value,
+          LastName: event.target.LastName.value,
+          ZIP: event.target.ZIP.value,
+          EmailAddress: event.target.EmailAddress.value,
+          ConfirmEmail: event.target.ConfirmEmail.value,
+          UniquePassword:event.target.UniquePassword.value,
+          ConfirmPassword: event.target.ConfirmPassword.value,
+          ProfilePic: event.target.ProfilePic.value,
+          GovernmentPic: event.target.GovernmentPic.value
+      };
+      console.log(userData);
+
+
+      fetch('http://localhost:8080/createUser', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(userData)
+      });
+
+
+      // axios.post(`http://localhost:8080/createUser`,{ a })
+      //   .then(res => {
+      //     console.log(res);
+      //     console.log(res.data);
+      //   });
+
+  }
 
 
   render() {
@@ -122,73 +189,72 @@ constructor(props) {
             <ModalHeader toggle={this.toggleSignUpModal}>Sign Up for Free!</ModalHeader>
 
             <ModalBody>
-                <Form>
+                <Form  onSubmit={this.handleSubmit}>
                     <FormGroup row>
                       <Label for="" sm={3}>Username</Label>
                       <Col sm={10}>
-                        <Input type="text" name="text" id="examplePassword"  />
+                        <Input type="text" name="UserName"   required/>
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="" sm={3}>First Name</Label>
                       <Col sm={10}>
-                        <Input type="email" name="email" id="exampleEmail"  />
+                        <Input type="text" name="FirstName"   required/>
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="" sm={3}>Last Name</Label>
                       <Col sm={10}>
-                        <Input type="text" name="text" id="examplePassword"  />
+                        <Input type="text" name="LastName"   required/>
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="" sm={3}>Zip Code</Label>
                       <Col sm={10}>
-                        <Input type="text" name="text" id="examplePassword"  />
+                        <Input type="text" name="ZIP"   required/>
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="" sm={3}>Email</Label>
                       <Col sm={10}>
-                        <Input type="email" name="text" id="examplePassword"  />
+                        <Input type="email" name="EmailAddress"   required/>
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="" sm={4}>Confirm Email</Label>
                       <Col sm={10}>
-                        <Input type="email" name="text" id="examplePassword"  />
+                        <Input type="email" name="ConfirmEmail"   required/>
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="" sm={4}>Create Password</Label>
                       <Col sm={10}>
-                        <Input type="email" name="text" id="examplePassword"  />
+                        <Input type="password" name="UniquePassword"   required/>
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="" sm={4}>Confirm Password</Label>
                       <Col sm={10}>
-                        <Input type="email" name="text" id="examplePassword"  />
+                        <Input type="password" name="ConfirmPassword"   required/>
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="" sm={5}>Upload Profile Picture</Label>
                       <Col sm={10}>
-                        <Input type="file" name="text" id="examplePassword"  />
+                        <Input type="file" name="ProfilePic"  />
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="" sm={6}>Upload Government Issued ID </Label>
                       <Col sm={10}>
-                        <Input type="file" name="text" id="examplePassword"  />
+                        <Input type="file" name="GovernmentPic"  />
                       </Col>
                     </FormGroup>
-                    <FormGroup>
-                      <Col sm={10}>
-                        <Button color="success" onClick={this.toggle}>Create Account</Button>
-                      </Col>
-                    </FormGroup>
+                    <Col sm={10}>
+                      <Button color="success" data-dismiss="modal" onClick={this.toggle}>Create Account</Button>
+                    </Col>
                 </Form>
+
             </ModalBody>
           </Modal>
 
@@ -231,10 +297,15 @@ constructor(props) {
         </header>
 
 
+        <a href="/"><Button>CLICK</Button></a>
+
+
       </div>
 
     );
   }
 }
+
+
 
 export default App;
