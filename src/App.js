@@ -90,17 +90,17 @@ class SearchField extends Component {
 	render() {
 		return(
 			<div className="row">
-				<div className="col-md-9">
+				<div className="ml-auto">
 					<Input
 						type= 'text'
 						id= 'searchBar'
 						className= 'search'
-						placeholder= 'Search for items'
+						placeholder= 'Search for items...'
 						onChange= {this.searchBar}
 					/>
-					
+
 				</div>
-				<div className="col-md-3">
+				<div className="ml-auto">
 					<Button onClick = {(i) => this.searchClick(this.state.searchInput)}>{this.state.searchLabel}</Button>
 				</div>
 			</div>
@@ -118,10 +118,11 @@ constructor(props) {
       isOpen: false,
       loginModal: false,
       signUpModal: false,
-      loginLabel: 'Log into account',
+      loginLabel: 'Log-in',
       signUpLabel: 'Sign Up',
+      isSearchOpen: false,
       searchLabel: 'Search',
-      uploadLabel: 'Post Item'
+      uploadLabel: 'Post'
     };
 
 
@@ -176,9 +177,14 @@ constructor(props) {
     });
   }
 
-  handleChange (event) {
-    this.setState( [event.target.name]: event.target.value )
-    console.log(event.target.value);
+  openSearch(){
+  	this.setState({
+  		isSearchOpen: !this.state.isSearchOpen
+  	});
+  }
+
+  toggleUpload() {
+  	console.log('pretend you uploaded something');
   }
 
   handleSubmit(event) {
@@ -225,10 +231,10 @@ constructor(props) {
             <NavbarToggler onClick={this.openNav} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <Button color="danger" onClick={this.toggleUpload}>{this.state.uploadLabel}</Button>
-                  <div className="divider"/>
-                  <Button outline color="primary" onClick={this.toggleLoginModal}>{this.state.loginLabel}</Button>
+                <NavItem style={{textAlign: 'left'}}>
+              		<SearchField />
+                </NavItem>
+                <div className="divider"/>
                 <div className="divider"/>
                   <Button color="success" onClick={this.toggleSignUpModal}>{this.state.signUpLabel}</Button>
 
@@ -335,9 +341,11 @@ constructor(props) {
                         <Input type="file" name="GovernmentPic"  />
                       </Col>
                     </FormGroup>
-                    <Col sm={10}>
-                      <Button color="success" data-dismiss="modal" onClick={this.toggle}>Create Account</Button>
-                    </Col>
+                    <FormGroup>
+                      <Col sm={10}>
+                        <Button color="success" onClick={this.toggle}>Create Account</Button>
+                      </Col>
+                    </FormGroup>
                 </Form>
 
             </ModalBody>
@@ -382,7 +390,47 @@ constructor(props) {
         </header>
 
 
-        <a href="/"><Button>CLICK</Button></a>
+      </div>
+
+
+      // <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+
+      //         <ModalHeader toggle={this.toggle}>Login</ModalHeader>
+
+      //         <ModalBody>
+      //             <Form>
+      //                 <FormGroup row>
+      //                   <Label for="exampleEmail" sm={2}>Email</Label>
+      //                   <Col sm={10}>
+      //                     <Input type="email" name="email" id="exampleEmail"  />
+      //                   </Col>
+      //                 </FormGroup>
+      //                 <FormGroup row>
+      //                   <Label for="examplePassword" sm={2}>Password</Label>
+      //                   <Col sm={10}>
+      //                     <Input type="password" name="password" id="examplePassword"  />
+      //                   </Col>
+      //                 </FormGroup>
+
+      //                 <FormGroup>
+      //                   <Col sm={10}>
+      //                     <Button color="success" onClick={this.toggle}>Log in</Button>
+      //                   </Col>
+      //                 </FormGroup>
+      //             </Form>
+      //         </ModalBody>
+      //       </Modal>
+
+
+
+
+
+
+
+
+
+
+
 
 
       </div>
