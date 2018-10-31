@@ -34,17 +34,29 @@ class SearchField extends Component {
 	render() {
 		return(
 			<div className="row">
+<<<<<<< HEAD
 				<div className="ml-auto">
+=======
+				<div className="col-md-9">
+>>>>>>> 08f6efc3cd6eadfe2e32fc03448341936fa24022
 					<Input
 						type= 'text'
 						id= 'searchBar'
 						className= 'search'
+<<<<<<< HEAD
 						placeholder= 'Search for items...'
+=======
+						placeholder= 'Search for items'
+>>>>>>> 08f6efc3cd6eadfe2e32fc03448341936fa24022
 						onChange= {this.searchBar}
 					/>
 					
 				</div>
+<<<<<<< HEAD
 				<div className="ml-auto">
+=======
+				<div className="col-md-3">
+>>>>>>> 08f6efc3cd6eadfe2e32fc03448341936fa24022
 					<Button onClick = {(i) => this.searchClick(this.state.searchInput)}>{this.state.searchLabel}</Button>
 				</div>
 			</div>
@@ -60,11 +72,18 @@ constructor(props) {
       isOpen: false,
       loginModal: false,
       signUpModal: false,
+<<<<<<< HEAD
       loginLabel: 'Log-in',
       signUpLabel: 'Sign Up',
       isSearchOpen: false,
       searchLabel: 'Search',
       uploadLabel: 'Post'
+=======
+      loginLabel: 'Log into account',
+      signUpLabel: 'Sign Up',
+      searchLabel: 'Search',
+      uploadLabel: 'Post Item'
+>>>>>>> 08f6efc3cd6eadfe2e32fc03448341936fa24022
     };
 
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
@@ -106,12 +125,15 @@ constructor(props) {
     });
   }
 
+<<<<<<< HEAD
   openSearch(){
   	this.setState({
   		isSearchOpen: !this.state.isSearchOpen
   	});
   }
 
+=======
+>>>>>>> 08f6efc3cd6eadfe2e32fc03448341936fa24022
   toggleUpload() {
   	console.log('pretend you uploaded something');
   }
@@ -125,12 +147,20 @@ constructor(props) {
         <div>
           <Navbar color="light" light expand="md">
             <NavbarBrand href="/">Ibenta</NavbarBrand>
+            <SearchField />
             <NavbarToggler onClick={this.openNav} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
+<<<<<<< HEAD
                 <NavItem style={{textAlign: 'left'}}>
               		<SearchField />
                 </NavItem>
+=======
+                <NavItem>
+                  <Button color="danger" onClick={this.toggleUpload}>{this.state.uploadLabel}</Button>
+                  <div className="divider"/>
+                  <Button outline color="primary" onClick={this.toggleLoginModal}>{this.state.loginLabel}</Button>
+>>>>>>> 08f6efc3cd6eadfe2e32fc03448341936fa24022
                 <div className="divider"/>
                 <div className="divider"/>
                 <div className="divider"/>
