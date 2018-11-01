@@ -12,3 +12,54 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.buyButton {
+	-webkit-transition-duration: 0.1s; /* Safari */
+	transition-duration: 0.1s;
+	background-color: #F4595B;
+	border-radius: 8px;
+	border-bottom: 4px solid #C24648;
+	color: white;
+	padding: 7.5px 35px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 18px;
+	font-family: 'Oxygen', sans-serif;
+	letter-spacing: 2px;
+	cursor: pointer;
+}
+
+.buyButton:hover {
+  background-color: #FF7375;
+  border: none;
+  border-radius: 8px;
+  border-bottom: 4px solid #C24648;
+  color: white;
+  padding: 7.5px 35px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  font-family: 'Oxygen', sans-serif;
+  letter-spacing: 2px;
+}
+
+.buyButton:active {
+  background-color: #C24648;
+  border: none;
+  border-radius: 8px;
+  border-bottom: 4px solid #C24648;
+  color: #CCC;
+  padding: 7.5px 35px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  font-family: 'Oxygen', sans-serif;
+  letter-spacing: 2px;
+}
+
+.card {
+  margin: 5px 10px;
+}
