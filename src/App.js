@@ -83,26 +83,21 @@ class SearchField extends Component {
   		this.setState({searchInput: search});
   	}
 
-  	searchClick(inputName) {
-  		console.log('searching for: ', inputName);
+  	searchSubmit(event) {
+  		console.log('searching for: ', event.target.search);
   	}
 
 	render() {
 		return(
-			<div className="row">
-				<div className="ml-auto">
+			<div>
+        <Form onSubmit= {this.searchSubmit}>
 					<Input
 						type= 'text'
-						id= 'searchBar'
-						className= 'search'
+						name= 'search'
 						placeholder= 'Search for items...'
 						onChange= {this.searchBar}
 					/>
-
-				</div>
-				<div className="ml-auto">
-					<Button onClick = {(i) => this.searchClick(this.state.searchInput)}>{this.state.searchLabel}</Button>
-				</div>
+        </Form>
 			</div>
 			);
 	}
@@ -122,6 +117,7 @@ constructor(props) {
       signUpLabel: 'Sign Up',
       isSearchOpen: false,
       searchLabel: 'Search',
+      postModal: false,
       uploadLabel: 'Post'
     };
 
@@ -130,6 +126,8 @@ constructor(props) {
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
     this.toggleSignUpModal = this.toggleSignUpModal.bind(this);
     this.openNav = this.openNav.bind(this);
+    this.openSearch = this.openSearch.bind(this);
+    this.toggleUploadModal = this.toggleUploadModal.bind(this);
   }
 
   toggleLoginModal() {
@@ -183,8 +181,10 @@ constructor(props) {
   	});
   }
 
-  toggleUpload() {
-  	console.log('pretend you uploaded something');
+  toggleUploadModal() {
+  	this.setState({
+      postModal: !this.state.postModal
+    });
   }
 
   handleSubmit(event) {
@@ -227,7 +227,6 @@ constructor(props) {
         <div>
           <Navbar color="light" light expand="md">
             <NavbarBrand href="/">Ibenta</NavbarBrand>
-            <SearchField />
             <NavbarToggler onClick={this.openNav} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
@@ -235,7 +234,15 @@ constructor(props) {
               		<SearchField />
                 </NavItem>
                 <div className="divider"/>
-                <div className="divider"/>
+                <NavItem style={{textAlign: 'left'}}>
+                  <Button color="danger" onClick={this.toggleUploadModal}>{this.state.uploadLabel}</Button>
+                </NavItem>
+                <NavItem style={{textAlign: 'left'}}>
+                  <div className="divider"/>
+                  <Button outline color="primary" onClick={this.toggleLoginModal}>{this.state.loginLabel}</Button>
+                </NavItem>
+                <NavItem style={{textAlign: 'left'}}>
+                  <div className="divider"/>
                   <Button color="success" onClick={this.toggleSignUpModal}>{this.state.signUpLabel}</Button>
 
                 </NavItem>
@@ -245,6 +252,31 @@ constructor(props) {
             </Collapse>
           </Navbar>
         </div>
+
+        <Modal isOpen={this.state.postModal} toggle={this.toggleUploadModal} className={this.props.className}>
+          <ModalHeader toggle={this.toggleUploadModal}>Post an Item</ModalHeader>
+          <ModalBody>
+            <Form>
+              <FormGroup row>
+                <Label for="exampleEmail" sm={2}>Email</Label>
+                <Col sm={10}>
+                  <Input type="email" name="email" id="exampleEmail"  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="examplePassword" sm={2}>Password</Label>
+                <Col sm={10}>
+                  <Input type="password" name="password" id="examplePassword"  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col sm={10}>
+                  <Button color="success" onClick={this.toggle}>Post</Button>
+                </Col>
+              </FormGroup>
+            </Form>
+          </ModalBody>
+        </Modal>
 
 
 
