@@ -4,6 +4,7 @@ import './App.css';
 import MarketplaceCard from './components/MarketplaceCard.jsx';
 import LoginModal from './components/modals/LoginModal.jsx';
 import SignUpModal from './components/modals/SignupModal.jsx';
+import PostModal from './components/modals/PostModal.jsx';
 import { Collapse, Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -86,7 +87,7 @@ class SearchField extends Component {
   		this.setState({searchInput: search});
   	}
 
-  	searchSubmit(event) {
+  	searchSubmit = (event) => {
   		console.log('searching for: ', event.target.search);
   	}
 
@@ -151,8 +152,16 @@ class App extends Component {
 
   render() {
 
+    const isOpen = this.state.isOpen;
+    const uploadLabel = 'Post';
+
     return (
       <div className="App">
+
+        <PostModal
+          isOpen={this.state.postModal}
+          toggle={this.toggleUploadModal}
+        />
 
         <LoginModal
           isOpen={this.state.loginModal}
@@ -169,18 +178,20 @@ class App extends Component {
             <NavbarToggler onClick={this.openNav} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                <NavItem style={{textAlign: 'left'}}>
+                <NavItem className='search-field' >
               		<SearchField />
                 </NavItem>
                 <div className="divider"/>
-                <NavItem style={{textAlign: 'left'}}>
-                  <Button color="danger" onClick={this.toggleUploadModal}>{this.state.uploadLabel}</Button>
+                <NavItem className='upload-button'>
+                  <Button color="danger" onClick={this.toggleUploadModal}>
+                    {uploadLabel}
+                  </Button>
                 </NavItem>
-                <NavItem style={{textAlign: 'left'}}>
+                <NavItem className='login-button'>
                   <div className="divider"/>
                   <Button outline color="primary" onClick={this.toggleLoginModal}>{this.state.loginLabel}</Button>
                 </NavItem>
-                <NavItem style={{textAlign: 'left'}}>
+                <NavItem className='signup-button'>
                   <div className="divider"/>
                   <Button color="success" onClick={this.toggleSignUpModal}>{this.state.signUpLabel}</Button>
                 </NavItem>
