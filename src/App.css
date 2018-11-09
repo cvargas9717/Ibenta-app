@@ -4,7 +4,6 @@
     display:inline-block;
 }
 
-
 .App {
   text-align: center;
 }
@@ -30,19 +29,19 @@
 }
 
 .search-field {
-  textAlign: 'center';
+  text-align: center;
 }
 
 .upload-button {
-  textAlign: 'center';
+  text-align: center;
 }
 
 .login-button {
-  textAlign: 'center';
+  text-align: center;
 }
 
 .signup-button {
-  textAlign: 'center';
+  text-align: center;
 }
 
 @keyframes App-logo-spin {

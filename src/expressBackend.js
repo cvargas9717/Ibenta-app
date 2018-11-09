@@ -3,6 +3,8 @@ const app = express()
 const models = require('./models');
 const port = 8080
 const bodyParser = require('body-parser');
+const cors = require('cors');
+app.use(cors({origin: true, credentials: true}))
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

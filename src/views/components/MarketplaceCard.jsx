@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class MarketplaceCard extends React.Component {
+class MarketplaceCard extends Component {
   constructor(props) {
     super(props);
     this.state = ({
