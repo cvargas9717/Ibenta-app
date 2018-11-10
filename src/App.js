@@ -32,7 +32,8 @@ class SearchField extends Component {
   	}
 
   	searchSubmit = (event) => {
-  		console.log('searching for: ', event.target.search);
+  		console.log('searching for: ', event.target.search.value);
+      event.preventDefault();
   	}
 
 	render() {

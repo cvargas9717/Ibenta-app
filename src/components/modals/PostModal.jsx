@@ -7,11 +7,13 @@ class PostModal extends React.Component {
     super(props);
     this.state = {
       condition: 'Brand-New',
-      category: 'Appliance'
+      category: 'Appliance',
+      price: ''
     }
 
     this.handleConditionChange = this.handleConditionChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -21,6 +23,17 @@ class PostModal extends React.Component {
 
   handleCategoryChange = (event) => {
     this.setState({category: event.target.value});
+  }
+
+  handlePriceChange = (event) => {
+    const price = event.target.value;
+
+    if (event.target.value >= 0){
+      this.setState({price});
+    }
+    else {
+      this.setState({price: ''});
+    }
   }
 
   handleSubmit = (event) => {
@@ -37,11 +50,11 @@ class PostModal extends React.Component {
 
     console.log(itemData);
 
-    //fetch('http://localhost:8080/createItem', {
-    //  method: 'POST',
-    //  headers: {'Content-Type':'application/json'},
-    //  body: JSON.stringify(itemData)
-    //});
+    fetch('http://localhost:8080/createItem', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(itemData)
+    });
 
     event.preventDefault();
   }
@@ -88,7 +101,7 @@ class PostModal extends React.Component {
             <FormGroup row>
               <Label for="" sm={4}>Price</Label>
               <Col sm={10}>
-                <Input type="number" name="price"  />
+                <Input name="price" value={this.state.price} onChange={this.handlePriceChange}/>
               </Col>
             </FormGroup>
             <FormGroup row>
