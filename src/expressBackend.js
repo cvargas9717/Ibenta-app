@@ -3,9 +3,13 @@ const app = express()
 const models = require('./models');
 const port = 8080
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(cors({origin: true, credentials: true}))
+
 
 
 app.post('/createUser', function (req, res) {
@@ -16,7 +20,7 @@ app.post('/createUser', function (req, res) {
     LastName: req.body.LastName,
     ZIP: req.body.ZIP,
     EmailAddress: req.body.EmailAddress,
-    ConfirmEmail: req.body.ConfirmEmail,
+    ConfirmEmail: req.body.ConfirmEmail,  
     UniquePassword: req.body.UniquePassword,
     ConfirmPassword: req.body.ConfirmPassword,
     ProfilePic: req.body.ProfilePic,
@@ -40,11 +44,15 @@ app.get('/userInfo', function (req, res) {
   models.UserInfo.findAll()
       .then((info) => {
         res.send(JSON.stringify(info));
-        //console.log(info);
 
       });
 
 })
+
+
+
+
+
 
  //app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

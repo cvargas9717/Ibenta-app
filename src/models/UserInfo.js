@@ -1,3 +1,5 @@
+//const bcrypt = require('bcrypt-nodejs');
+
 module.exports = (sequelize, DataTypes) => {
   var UserInfo = sequelize.define('UserInfo', {
     UserName: DataTypes.TEXT,
@@ -16,6 +18,19 @@ module.exports = (sequelize, DataTypes) => {
   UserInfo.associate = (models) => {
     // associations can be defined here
   }
+
+  // UserInfo.beforeCreate((user) =>
+  //     new sequelize.Promise((resolve) => {
+  //       bcrypt.hash(user.password_hash, null, null, (err, hashedPassword) => {
+  //         resolve(hashedPassword);
+  //       });
+  //     }).then((hashedPw) => {
+  //       user.password_hash = hashedPw;
+  //     })
+  //   );
+
+
+
 
   return UserInfo;
 };

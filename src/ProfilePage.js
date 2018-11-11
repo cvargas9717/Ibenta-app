@@ -5,7 +5,7 @@ class ProfilePage extends Component {
 
 render() {
 
-  
+
 }
 
 

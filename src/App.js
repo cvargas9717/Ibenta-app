@@ -11,20 +11,9 @@ import { Collapse, Navbar, Card, CardImg, CardBody, CardTitle, CardSubtitle, Car
   DropdownToggle,
   DropdownMenu,
   DropdownItem, Col, Form, FormGroup, Label, Input, FormText, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import axios from 'axios';
 
-  const inputParsers = {
-    date(input) {
-      const [month, day, year] = input.split('/');
-      return `${year}-${month}-${day}`;
-    },
-    uppercase(input) {
-      return input.toUpperCase();
-    },
-    number(input) {
-      return parseFloat(input);
-    },
-  };
+
+
 
 
 
@@ -42,7 +31,7 @@ constructor(props) {
       signUpLabel: 'Sign Up'
     };
 
-
+    this.handleLogin = this.handleLogin.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleLoginModal = this.toggleLoginModal.bind(this);
     this.toggleSignUpModal = this.toggleSignUpModal.bind(this);
@@ -54,31 +43,19 @@ constructor(props) {
       loginModal: !this.state.loginModal
     });
 
-     //const url = "http://ctp-zip-api.herokuapp.com/zip/90210";
 
-    // fetch(url)
-    //   .then((result) => {
-    //     if(result.ok){
-    //       return result.json();
-    //     } else {
-    //       return [];
-    //     }
-    //   })
-    //   .then((jsonResult) => {
-    //       console.log(jsonResult);
-    //   })
 
-    fetch('http://localhost:8080/userInfo')
-    .then((result) => {
-      if(result.ok) {
-        return result.json();
-      }else {
-        return [];
-      }
-    })
-    .then((jsonResult) =>{
-      console.log(jsonResult);
-    })
+    // fetch('http://localhost:8080/userInfo')
+    // .then((result) => {
+    //   if(result.ok) {
+    //     return result.json();
+    //   }else {
+    //     return [];
+    //   }
+    // })
+    // .then((jsonResult) =>{
+    //   console.log(jsonResult);
+    // })
 
   }
 
@@ -100,7 +77,7 @@ constructor(props) {
   }
 
   handleSubmit(event) {
-    //event.preventDefault();
+    event.preventDefault();
       var userData = {
           UserName: event.target.UserName.value,
           FirstName: event.target.FirstName.value,
@@ -119,15 +96,63 @@ constructor(props) {
       fetch('http://localhost:8080/createUser', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
+
         body: JSON.stringify(userData)
       });
 
+
+      if(this.state.signUpModal) {
+        this.setState({
+          signUpModal: !this.state.signUpModal
+        });
+      }
 
       // axios.post(`http://localhost:8080/createUser`,{ a })
       //   .then(res => {
       //     console.log(res);
       //     console.log(res.data);
       //   });
+
+  }
+
+  handleLogin(event){
+
+    event.preventDefault();
+
+    fetch('http://localhost:8080/userInfo')
+    .then((result) => {
+      if(result.ok) {
+        return result.json();
+      }else {
+        return [];
+      }
+    })
+    .then((jsonResult) =>{
+      console.log(jsonResult);
+
+      var obj = jsonResult;
+      //var arrData = [];
+      console.log(obj.length);
+      //arrData.push(jsonResult);
+      //console.log(arrData);
+
+
+          //event.target.LoginEmail.value,
+        // event.target.LoginPassord.value
+
+        //event.persist();
+      //console.log(event.target.LoginEmail.value);
+
+      // for(var i = 0; i < obj.length; i++){
+      //   if(obj[i].EmailAddress === event.target.LoginEmail.value) {
+      //     if(obj[i].UniquePassword === event.target.LoginPassword.value) {
+      //       console.log("Im in!!!!");
+      //     }
+      //   }
+      // }
+
+
+    })
 
   }
 
@@ -162,17 +187,17 @@ constructor(props) {
             <ModalHeader toggle={this.toggleLoginModal}>Login</ModalHeader>
 
             <ModalBody>
-                <Form>
+                <Form  onSubmit={this.handleLogin}>
                     <FormGroup row>
                       <Label for="exampleEmail" sm={2}>Email</Label>
                       <Col sm={10}>
-                        <Input type="email" name="email" id="exampleEmail"  />
+                        <Input type="email" name="LoginEmail"  required />
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="examplePassword" sm={2}>Password</Label>
                       <Col sm={10}>
-                        <Input type="password" name="password" id="examplePassword"  />
+                        <Input type="password" name="LoginPassword"  required  />
                       </Col>
                     </FormGroup>
                     <FormGroup>
@@ -297,7 +322,7 @@ constructor(props) {
         </header>
 
 
-        <a href="/"><Button>CLICK</Button></a>
+
 
 
       </div>
