@@ -7,11 +7,17 @@ class PostModal extends React.Component {
     super(props);
     this.state = {
       condition: 'Brand-New',
-      category: 'Appliance'
+      category: 'Appliance',
+      price: '0.00',
+      tag: '',
+      tags: []
     }
 
     this.handleConditionChange = this.handleConditionChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.handleTagChange = this.handleTagChange.bind(this);
+    this.onTagClick = this.onTagClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -23,16 +29,45 @@ class PostModal extends React.Component {
     this.setState({category: event.target.value});
   }
 
+  handlePriceChange = (event) => {
+    this.setState({price: event.target.value});
+  }
+
+  handleTagChange = (event) => {
+    const tag = event.target.value;
+    const size = tag.length;
+
+    let tags = this.state.tags;
+
+    if (tag[size-1] === ',') {
+      tags.push(tag.substring(0,size-1));
+      this.setState({tag: '', tags});
+    }
+    else {
+      this.setState({tag, tags});
+    }
+  }
+
+  onTagClick = (i) => {
+    let tags = this.state.tags;
+
+    tags.splice(i, 1);
+    this.setState({tags});
+  }
+
   handleSubmit = (event) => {
+    const price = parseFloat(event.target.price.value).toFixed(2)
+
     var itemData = {
       Title: event.target.title.value,
       Subtitle: event.target.subtitle.value,
       Category: event.target.category.value,
       Condition: event.target.condition.value,
-      Price: event.target.price.value,
+      Price: price,
       Description: event.target.description.value,
       Zipcode: event.target.zipcode.value,
-      Picture: event.target.picture.value
+      Picture: event.target.picture.value,
+      Tags: this.state.tags
     }
 
     console.log(itemData);
@@ -47,19 +82,24 @@ class PostModal extends React.Component {
   }
 
   render() {
+
+    const tags = this.state.tags.map((tag, i) =>
+      <a href="#" className="col-auto" key={i} onClick={() => this.onTagClick(i)}>{tag}[x] </a>
+    );
+
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className}>
         <ModalHeader toggle={this.props.toggle}>Create an Item Listing</ModalHeader>
         <ModalBody>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup row>
-              <Label for="" sm={3}>Item Title</Label>
+              <Label for="" sm={3}>Item Name</Label>
               <Col sm={10}>
                 <Input type="text" name="title" />
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="" sm={3}>Sub-Title</Label>
+              <Label for="" sm={3}>Subtitle</Label>
               <Col sm={10}>
                 <Input type="text" name="subtitle" />
               </Col>
@@ -88,7 +128,7 @@ class PostModal extends React.Component {
             <FormGroup row>
               <Label for="" sm={4}>Price</Label>
               <Col sm={10}>
-                <Input type="number" name="price"  />
+                <Input name="price" value={this.state.price} onChange={this.handlePriceChange} />
               </Col>
             </FormGroup>
             <FormGroup row>
@@ -107,6 +147,17 @@ class PostModal extends React.Component {
               <Label for="" sm={5}>Upload Item Picture</Label>
               <Col sm={10}>
                 <Input type="file" name="picture"  />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="" sm={5}>Tags</Label>
+              <Col sm={10}>
+                <Input type="text" name="tags" value={this.state.tag} onChange={this.handleTagChange} placeholder="comma separated tags" />
+              </Col>
+            </FormGroup>
+            <FormGroup>
+              <Col>
+                {tags}
               </Col>
             </FormGroup>
             <FormGroup>
