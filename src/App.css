@@ -4,7 +4,6 @@
     display:inline-block;
 }
 
-
 .App {
   text-align: center;
 }
@@ -16,6 +15,7 @@
 
 .App-header {
   background-color: #282c34;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -26,6 +26,22 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.search-field {
+  text-align: center;
+}
+
+.upload-button {
+  text-align: center;
+}
+
+.login-button {
+  text-align: center;
+}
+
+.signup-button {
+  text-align: center;
 }
 
 @keyframes App-logo-spin {

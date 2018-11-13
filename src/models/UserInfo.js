@@ -1,15 +1,52 @@
-//const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt-nodejs');
 
 module.exports = (sequelize, DataTypes) => {
   var UserInfo = sequelize.define('UserInfo', {
-    UserName: DataTypes.TEXT,
-    FirstName: DataTypes.TEXT,
-    LastName: DataTypes.TEXT,
-    ZIP: DataTypes.TEXT,
-    EmailAddress: DataTypes.TEXT,
-    ConfirmEmail: DataTypes.TEXT,
-    UniquePassword: DataTypes.TEXT,
-    ConfirmPassword: DataTypes.TEXT,
+    UserName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: true,
+        isAlphanumeric: true,
+      },
+    },
+    FirstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    LastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    Zip: DataTypes.STRING,
+    EmailAddress: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: true,
+        isEmail: true, //sequalize validation
+      },
+    },
+    ConfirmEmail: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: true,
+        isEmail: true, //sequalize validation
+      },
+    },
+    UniquePassword: {
+      type: DataTypes.STRING,
+    },
     ProfilePic: DataTypes.BLOB,
     GovernmentPic: DataTypes.BLOB
 
@@ -19,17 +56,16 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
   }
 
-  // UserInfo.beforeCreate((user) =>
-  //     new sequelize.Promise((resolve) => {
-  //       bcrypt.hash(user.password_hash, null, null, (err, hashedPassword) => {
-  //         resolve(hashedPassword);
-  //       });
-  //     }).then((hashedPw) => {
-  //       user.password_hash = hashedPw;
-  //     })
-  //   );
-
-
+  //this is sequelize  lifecycle hook
+  UserInfo.beforeCreate((user) =>
+      new sequelize.Promise((resolve) => {
+        bcrypt.hash(user.UniquePassword, null, null, (err, hashedPassword) => {
+          resolve(hashedPassword);
+        });
+      }).then((hashedPw) => {
+        user.UniquePassword = hashedPw;
+      })
+    );
 
 
   return UserInfo;

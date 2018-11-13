@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt-nodejs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-const Users = require('../models').User;
+const UserInfo = require('../models').UserInfo;
 
 
 //when a user tries to login
@@ -11,20 +11,22 @@ function passwordsMatch(passwordSubmitted, storedPassword) {
 }
 
 passport.use(new LocalStrategy({
-    usernameField: 'email',
+    EmailField: 'logEmail',
   },
   (email, password, done) => {
     UserInfo.findOne({
-      where: { email },
+      where: { logEmail },
     }).then((user) => {
       if(!user) {
+        console.log("Incorrect Email");
         return done(null, false, { message: 'Incorrect email.' });
       }
 
       if (passwordsMatch(password, user.password) === false) {
+        console.log("Incorrect password");
         return done(null, false, { message: 'Incorrect password.' });
       }
-
+      console.log("Successfully loggedIn!");
       return done(null, user, { message: 'Successfully Logged In!' });
     });
   })
@@ -37,7 +39,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  Users.findById(id).then((user) => {
+  UserInfo.findById(id).then((user) => {
     if (!user) {
       return done(null, false);
     }

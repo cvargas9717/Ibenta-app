@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "cvargas9717",
-    "password": "minecraft123",
+    "username": "*",
+    "password": "*",
     "database": "Ibenta_development",
     "host": "127.0.0.1",
     "dialect": "postgresql"
