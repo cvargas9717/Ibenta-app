@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Form, Input } from 'reactstrap'; 
+import { Form, Input } from 'reactstrap';
 
 class SearchField extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchInput: '',
-			searchLabel: 'Search'
+			searchInput: ''
 		}
 	}
 
@@ -17,7 +16,8 @@ class SearchField extends Component {
   }
 
   searchSubmit = (event) => {
-    console.log('searching for: ', event.target.search);
+    console.log('searching for: ', event.target.search.value);
+		//event.preventDefault();
   }
 
 	render() {

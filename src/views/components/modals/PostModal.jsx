@@ -6,27 +6,15 @@ class PostModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      condition: 'Brand-New',
-      category: 'Appliance',
       price: '0.00',
       tag: '',
       tags: []
     }
 
-    this.handleConditionChange = this.handleConditionChange.bind(this);
-    this.handleCategoryChange = this.handleCategoryChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleTagChange = this.handleTagChange.bind(this);
     this.onTagClick = this.onTagClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleConditionChange = (event) => {
-    this.setState({condition: event.target.value});
-  }
-
-  handleCategoryChange = (event) => {
-    this.setState({category: event.target.value});
   }
 
   handlePriceChange = (event) => {
@@ -72,11 +60,11 @@ class PostModal extends React.Component {
 
     console.log(itemData);
 
-    //fetch('http://localhost:8080/createItem', {
-    //  method: 'POST',
-    //  headers: {'Content-Type':'application/json'},
-    //  body: JSON.stringify(itemData)
-    //});
+    fetch('http://localhost:8080/createListing', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(itemData)
+    });
 
     event.preventDefault();
   }
@@ -106,7 +94,7 @@ class PostModal extends React.Component {
             </FormGroup>
             <FormGroup row>
               <Label for="" sm={3}>Category:</Label>
-                <select name="category" value={this.state.category} onChange={this.handleCategoryChange}>
+                <select name="category" >
                   <option value="Appliance">Appliance</option>
                   <option value="Books">Books</option>
                   <option value="Clothing">Clothing</option>
@@ -117,7 +105,7 @@ class PostModal extends React.Component {
             </FormGroup>
             <FormGroup row>
               <Label for="" sm={3}>Condition:</Label>
-              <select name="condition" value={this.state.condition} onChange={this.handleConditionChange}>
+              <select name="condition" >
                 <option value="Brand-New">Brand-New</option>
                 <option value="Like-New">Like-New</option>
                 <option value="Refurbrished">Refurbrished</option>
@@ -128,7 +116,7 @@ class PostModal extends React.Component {
             <FormGroup row>
               <Label for="" sm={4}>Price</Label>
               <Col sm={10}>
-                <Input name="price" value={this.state.price} onChange={this.handlePriceChange} />
+                <Input name="price" value={this.state.price} onChange={this.handlePriceChange} placeholder="price in USD" />
               </Col>
             </FormGroup>
             <FormGroup row>
