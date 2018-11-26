@@ -25,7 +25,7 @@ class Post extends Component {
           isOpen={this.state.modal}
           toggle={this.toggle}
         />
-        <Button color="danger" onClick={this.toggle}>
+      <Button color="danger" onClick={this.toggle} id="navitem">
           {this.props.label}
         </Button>
       </div>

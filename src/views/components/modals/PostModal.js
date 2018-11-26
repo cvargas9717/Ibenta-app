@@ -6,21 +6,52 @@ class PostModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      condition: 'Brand-New',
-      category: 'Appliance'
+      price: '0.00',
+      tag: '',
+      tags: []
     }
 
-    this.handleConditionChange = this.handleConditionChange.bind(this);
-    this.handleCategoryChange = this.handleCategoryChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.onPriceBlur = this.onPriceBlur.bind(this);
+    this.handleTagChange = this.handleTagChange.bind(this);
+    this.onTagClick = this.onTagClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleConditionChange = (event) => {
-    this.setState({condition: event.target.value});
+  handlePriceChange = (event) => {
+    this.setState({price: event.target.value});
   }
 
-  handleCategoryChange = (event) => {
-    this.setState({category: event.target.value});
+  onPriceBlur = (event) => {
+    const price = parseFloat(event.target.value).toFixed(2);
+    if (price > 0) {
+      this.setState({price})
+    }
+    else {
+      this.setState({price: 0.00});
+    }
+  }
+
+  handleTagChange = (event) => {
+    const tag = event.target.value;
+    const size = tag.length;
+
+    let tags = this.state.tags;
+
+    if (tag[size-1] === ',' && size > 1) {
+      tags.push(tag.substring(0,size-1));
+      this.setState({tag: '', tags});
+    }
+    else {
+      this.setState({tag, tags});
+    }
+  }
+
+  onTagClick = (i) => {
+    let tags = this.state.tags;
+
+    tags.splice(i, 1);
+    this.setState({tags});
   }
 
   handleSubmit = (event) => {
@@ -32,41 +63,52 @@ class PostModal extends React.Component {
       Price: event.target.price.value,
       Description: event.target.description.value,
       Zipcode: event.target.zipcode.value,
-      Picture: event.target.picture.value
+      Picture: event.target.picture.value,
+      Tags: this.state.tags
     }
 
     console.log(itemData);
 
-    //fetch('http://localhost:8080/createItem', {
-    //  method: 'POST',
-    //  headers: {'Content-Type':'application/json'},
-    //  body: JSON.stringify(itemData)
-    //});
+    // fetch('http://localhost:8080/createListing', {
+    //   method: 'POST',
+    //   headers: {'Content-Type':'application/json'},
+    //   body: JSON.stringify(itemData)
+    // });
 
     event.preventDefault();
   }
 
   render() {
+
+    const tags = this.state.tags.map((tag, i) =>
+      <div className="tag-group">
+        <a href="#" id="tag" className="col-auto" key={i} onClick={() => this.onTagClick(i)}>{tag}</a>
+      </div>
+    );
+
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className}>
         <ModalHeader toggle={this.props.toggle}>Create an Item Listing</ModalHeader>
         <ModalBody>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup row>
-              <Label for="" sm={3}>Item Title</Label>
+              <Label for="" sm={3}>Item Name</Label>
               <Col sm={10}>
                 <Input type="text" name="title" />
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="" sm={3}>Sub-Title</Label>
+              <Label for="" sm={3}>Subtitle</Label>
               <Col sm={10}>
                 <Input type="text" name="subtitle" />
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="" sm={3}>Category:</Label>
-                <select name="category" value={this.state.category} onChange={this.handleCategoryChange}>
+              <Col>
+                <Label for="" sm={3}>Category:</Label>
+              </Col>
+              <Col>
+                <select name="category" >
                   <option value="Appliance">Appliance</option>
                   <option value="Books">Books</option>
                   <option value="Clothing">Clothing</option>
@@ -74,21 +116,28 @@ class PostModal extends React.Component {
                   <option value="Video Games">Video Games</option>
                   <option value="Other">Other</option>
                 </select>
+              </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="" sm={3}>Condition:</Label>
-              <select name="condition" value={this.state.condition} onChange={this.handleConditionChange}>
-                <option value="Brand-New">Brand-New</option>
-                <option value="Like-New">Like-New</option>
-                <option value="Refurbrished">Refurbrished</option>
-                <option value="Used">Used</option>
-                <option value="Well-Worn">Well-Worn</option>
-              </select>
+              <Col>
+                <Label for="" sm={3}>Condition:</Label>
+              </Col>
+              <Col>
+                <select name="condition" >
+                  <option value="Brand-New">Brand-New</option>
+                  <option value="Like-New">Like-New</option>
+                  <option value="Refurbrished">Refurbrished</option>
+                  <option value="Used">Used</option>
+                  <option value="Well-Worn">Well-Worn</option>
+                </select>
+              </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="" sm={4}>Price</Label>
-              <Col sm={10}>
-                <Input type="number" name="price"  />
+              <Col>
+                <Label for="" sm={3}>Price:</Label>
+              </Col>
+              <Col>
+                <Input name="price" value={this.state.price} onChange={this.handlePriceChange} onBlur={this.onPriceBlur}  placeholder="price in USD" />
               </Col>
             </FormGroup>
             <FormGroup row>
@@ -98,8 +147,10 @@ class PostModal extends React.Component {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="" sm={3}>Zipcode</Label>
-              <Col sm={10}>
+              <Col>
+                <Label for="" sm={3}>Zip:</Label>
+              </Col>
+              <Col>
                 <Input type="text" name="zipcode" placeholder="ex: 12345" />
               </Col>
             </FormGroup>
@@ -107,6 +158,17 @@ class PostModal extends React.Component {
               <Label for="" sm={5}>Upload Item Picture</Label>
               <Col sm={10}>
                 <Input type="file" name="picture"  />
+              </Col>
+            </FormGroup>
+            <FormGroup row>
+              <Label for="" sm={5}>Tags</Label>
+              <Col sm={10}>
+                <Input type="text" name="tags" value={this.state.tag} onChange={this.handleTagChange} placeholder="comma separated tags" />
+              </Col>
+            </FormGroup>
+            <FormGroup>
+              <Col>
+                {tags}
               </Col>
             </FormGroup>
             <FormGroup>

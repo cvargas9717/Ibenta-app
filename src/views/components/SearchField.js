@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input } from 'reactstrap'; 
+import { Form, Input } from 'reactstrap';
 
 class SearchField extends Component {
 
@@ -22,16 +22,14 @@ class SearchField extends Component {
 
 	render() {
 		return(
-			<div>
-        <Form onSubmit= {this.searchSubmit}>
+			<Form onSubmit= {this.props.searchSubmit} className="search-field" >
 					<Input
 						type= 'text'
 						name= 'search'
 						placeholder= 'Search for items...'
 						onChange= {this.searchBar}
 					/>
-        </Form>
-			</div>
+			</Form>
 			);
 	}
 }

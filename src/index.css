@@ -63,3 +63,47 @@ code {
 .card {
   margin: 5px 10px;
 }
+
+#tag {
+  border: 3px solid gray;
+  border-radius: 12px;
+  padding: 7px;
+  background-color: gray;
+  color: white;
+  margin-right: 3px;
+}
+
+.tag-group {
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.desktop-category {
+  font-size: 115%;
+}
+
+.search-field {
+  text-align: center;
+  width: 50%;
+  margin-left: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+  .desktop-category {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  .search-field {
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 2px;
+  }
+
+  #navitem {
+    margin: 2px;
+    text-align: center;
+    border-radius: 10px;
+    width: 100%;
+  }
+}

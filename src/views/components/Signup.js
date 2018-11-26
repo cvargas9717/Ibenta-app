@@ -94,7 +94,7 @@ class Signup extends Component {
         closeModal = {this.closeModal}
         toggle={this.toggle}
       />
-      <Button color="success" onClick={this.toggle}>
+    <Button color="success" onClick={this.toggle} id="navitem">
         {this.props.label}
       </Button>
       </div>

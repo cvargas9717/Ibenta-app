@@ -37,7 +37,7 @@ class Login extends Component {
           isOpen={this.state.modal}
           toggle={this.toggle}
         />
-        <Button color="primary" onClick={this.toggle}>
+      <Button color="primary" onClick={this.toggle} id="navitem">
           {this.props.label}
         </Button>
       </div>
