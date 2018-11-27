@@ -69,13 +69,14 @@ class PostModal extends React.Component {
 
     console.log(itemData);
 
-    // fetch('http://localhost:8080/createListing', {
-    //   method: 'POST',
-    //   headers: {'Content-Type':'application/json'},
-    //   body: JSON.stringify(itemData)
-    // });
+    fetch('http://localhost:8080/createListing', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(itemData)
+    });
 
-    event.preventDefault();
+    //event.preventDefault();
+    this.props.toggle();
   }
 
   render() {

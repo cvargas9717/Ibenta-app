@@ -50,6 +50,29 @@ app.post('/createUser', function (req, res) {
 
 })
 
+app.post('/createListing', function (req, res) {
+  models.ListingInfo.create({
+   Title: req.body.Title,
+   Subtitle: req.body.Subtitle,
+   Category: req.body.Category,
+   Condition: req.body.Condition,
+   Price: req.body.Price,
+   Description: req.body.Description,
+   Zipcode: req.body.Zipcode,
+   Picture: req.body.Picture,
+   Tags: req.body.Tags
+ })
+ .then((post) => {
+   console.log(post);
+   //res.send("SUPPP");
+    //res.redirect('/');
+ })
+ .catch((err) => {
+   console.log('ERROR while creating a new listing');
+   res.redirect('/error');
+ })
+})
+
 
 // app.get('/userInfo', function (req, res) {
 //
