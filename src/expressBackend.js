@@ -8,7 +8,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const passport = require('./middlewares/auth');
-
+var router = express.Router();
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,7 +41,9 @@ app.post('/createUser', function (req, res) {
   .then((post) => {
     console.log(post);
     res.send("User Created");
-     //res.redirect('/');
+     //res.redirect('/success');
+
+
   })
   .catch((err) => {
     console.log('ERROR while creating a new user');
@@ -49,6 +51,7 @@ app.post('/createUser', function (req, res) {
   })
 
 })
+
 
 
 // app.get('/userInfo', function (req, res) {
@@ -60,6 +63,8 @@ app.post('/createUser', function (req, res) {
 //       });
 //
 // })
+
+
 
 
 
