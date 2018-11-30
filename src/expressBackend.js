@@ -84,6 +84,16 @@ app.post('/createListing', function (req, res) {
 //
 // })
 
+app.get('/listingInfo', function (req, res) {
+
+  models.ListingInfo.findAll()
+      .then((info) => {
+        res.send(JSON.stringify(info));
+
+      });
+
+})
+
 
 
 // Load up all of the controllers

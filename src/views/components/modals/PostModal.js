@@ -67,7 +67,7 @@ class PostModal extends React.Component {
       Tags: this.state.tags
     }
 
-    console.log(itemData);
+    //console.log(itemData);
 
     fetch('http://localhost:8080/createListing', {
       method: 'POST',
@@ -75,8 +75,9 @@ class PostModal extends React.Component {
       body: JSON.stringify(itemData)
     });
 
-    //event.preventDefault();
     this.props.toggle();
+
+    event.preventDefault();
   }
 
   render() {

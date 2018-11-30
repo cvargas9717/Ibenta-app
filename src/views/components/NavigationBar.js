@@ -48,6 +48,17 @@ class NavigationBar extends Component {
 
   searchSubmit = (event) => {
     console.log('searching for: ', event.target.search.value + this.state.category);
+    fetch('http://localhost:8080/listingInfo')
+    .then((result) => {
+      if(result.ok) {
+        return result.json();
+      } else {
+        return [];
+      }
+    })
+    .then((jsonResult) =>{
+      console.log(jsonResult);
+    })
     event.preventDefault();
   }
 
