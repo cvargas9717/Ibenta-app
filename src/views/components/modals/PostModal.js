@@ -15,6 +15,7 @@ class PostModal extends React.Component {
     this.onPriceBlur = this.onPriceBlur.bind(this);
     this.handleTagChange = this.handleTagChange.bind(this);
     this.onTagClick = this.onTagClick.bind(this);
+    this.handleTagKeyPress = this.handleTagKeyPress.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -52,6 +53,15 @@ class PostModal extends React.Component {
 
     tags.splice(i, 1);
     this.setState({tags});
+  }
+
+  handleTagKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      const tag = event.target.value;
+      let tags = this.state.tags;
+      tags.push(tag);
+      this.setState({tag: '', tags});
+    }
   }
 
   handleSubmit = (event) => {
@@ -134,7 +144,7 @@ class PostModal extends React.Component {
             </FormGroup>
             <FormGroup row>
               <Col>
-                <Label for="" sm={3}>Price:</Label>
+                <Label for="" sm={3}>Price (US$):</Label>
               </Col>
               <Col>
                 <Input name="price" value={this.state.price} onChange={this.handlePriceChange} onBlur={this.onPriceBlur}  placeholder="price in USD" />
@@ -163,7 +173,7 @@ class PostModal extends React.Component {
             <FormGroup row>
               <Label for="" sm={5}>Tags</Label>
               <Col sm={10}>
-                <Input type="text" name="tags" value={this.state.tag} onChange={this.handleTagChange} placeholder="comma separated tags" />
+                <Input type="text" name="tags" value={this.state.tag} onChange={this.handleTagChange} onKeyPress={this.handleTagKeyPress} placeholder="comma separated tags" />
               </Col>
             </FormGroup>
             <FormGroup>
