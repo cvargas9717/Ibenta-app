@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
+import { storage } from '../../firebase';
 import SignUpModal from './modals/SignUpModal.js';
 import { BrowserRouter as Router, Route, Link,Redirect } from "react-router-dom";
 
@@ -8,7 +9,11 @@ class Signup extends Component {
     super(props);
     this.state = {
       modal: false,
-      redirect: true
+      redirect: true,
+      ProfilePic: null,
+      ProfilePicURL: '',
+      GovernmentPic: null,
+      GovernmentPicURL: ''
     };
 
     this.toggle = this.toggle.bind(this);
@@ -54,6 +59,62 @@ class Signup extends Component {
 
   }
 
+  handleProfilePicChange = (event) => {
+    if (event.target.files[0]) {
+      const image = event.target.files[0];
+      console.log(image);
+      this.setState({
+        ProfilePic: image
+      });
+      const uploadTask = storage.ref(`profileImages/${image.name}`).put(image);
+      uploadTask.on('state_changed', 
+      (snapshot) => {
+        // progress function
+      },
+      (error) => {
+        // error function
+        console.log(error);
+      },
+      () => {
+        // complete function   
+        storage.ref('profileImages').child(image.name).getDownloadURL().then(url => {
+          console.log(url);
+          this.setState({
+            ProfilePicURL: url
+          });
+        })
+      });
+    }
+  }
+
+  handleGovernmentPicChange = (event) => {
+    if (event.target.files[0]) {
+      const image = event.target.files[0];
+      console.log(image);
+      this.setState({
+        GovernmentPic: image
+      });
+      const uploadTask = storage.ref(`governmentImages/${image.name}`).put(image);
+      uploadTask.on('state_changed', 
+      (snapshot) => {
+        // progress function
+      },
+      (error) => {
+        // error function
+        console.log(error);
+      },
+      () => {
+        // complete function   
+        storage.ref('governmentImages').child(image.name).getDownloadURL().then(url => {
+          console.log(url);
+          this.setState({
+            GovernmentPicURL: url
+          });
+        })
+      });
+    }
+  }
+
   handleSubmit(event) {
 
     event.preventDefault();
@@ -66,8 +127,8 @@ class Signup extends Component {
           EmailAddress: event.target.EmailAddress.value,
           ConfirmEmail: event.target.ConfirmEmail.value,
           UniquePassword:event.target.UniquePassword.value,
-          ProfilePic: event.target.ProfilePic.value,
-          GovernmentPic: event.target.GovernmentPic.value
+          ProfilePicURL: this.state.ProfilePicURL,
+          GovernmentPicURL: this.state.GovernmentPicURL
       };
       console.log(userData);
 
@@ -93,6 +154,8 @@ class Signup extends Component {
         handleSubmit = {this.handleSubmit}
         closeModal = {this.closeModal}
         toggle={this.toggle}
+        handleGovernmentPicChange={this.handleGovernmentPicChange}
+        handleProfilePicChange={this.handleProfilePicChange}
       />
     <Button color="success" onClick={this.toggle} id="navitem">
         {this.props.label}

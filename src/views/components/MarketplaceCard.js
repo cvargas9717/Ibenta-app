@@ -3,30 +3,48 @@ import React, { Component } from 'react';
 class MarketplaceCard extends Component {
   constructor(props) {
     super(props);
-    this.state = ({
-      pictureUrl : "https://cnet2.cbsistatic.com/img/IwuqCeoFETSbn95uZhqoHKaFu8A=/2017/09/26/4c6ec5f4-8dcb-45c7-8770-e87208e3d3ae/17bose-quietcomfort-35-ii.jpg",
-      itemName : "Bose QuietComfort 35 II",
-      itemPrice : 250,
-      location : "New York, 10012",
-      width : this.props.width,
-      height : this.props.height,
-      buttonName : this.props.buttonName
-    });
+    this.state = {
+      city : "Unknown",
+    };
+  }
+
+  componentDidMount() {
+    const zip = this.props.data.Zipcode;
+    if (zip.length === 5) {
+      const url = "https://ctp-zip-api.herokuapp.com/zip/" + zip;
+      fetch(url)
+        .then((result) => {
+          if (result.ok) {
+            return result.json();
+          } else {
+            return null;
+          }
+        })
+        .then((jsonResult) => {
+          if (jsonResult) {
+            const cityName = jsonResult[0].LocationText;
+            this.setState({
+              city : cityName
+            });
+          }
+        });
+    }
   }
 
   render() {
     return (
-      <div className="card" style={{maxWidth: this.state.width, height: this.props.height}}>
-        <div className="header">
-          <img className="card-img-top img-fluid mx-auto"
-            src={this.state.pictureUrl}
+      <div className="card" style={{maxWidth: this.props.width, height: this.props.height}}>
+        <div className="header thumbnail">
+          <img 
+            className="card-img-top img-fluid"
+            src={this.props.data.PictureURL}
             alt="Card image cap"
           />
         </div>
         <div className="card-body">
-          <h3 className="card-title">{this.state.itemName}</h3>
-          <h4 className="card-subtitle">${this.state.itemPrice}</h4>
-          <h5 className="card-text text-muted">{this.state.location}</h5>
+          <h3 className="card-title">{this.props.data.Title}</h3>
+          <h4 className="card-subtitle">${this.props.data.Price}</h4>
+          <h5 className="card-text text-muted">{this.state.city + ' ' + this.props.data.Zipcode}</h5>
           <a href="#" className="buyButton round font-weight-bold">{this.props.buttonName}</a>
         </div>
       </div>

@@ -64,6 +64,11 @@ code {
   margin: 5px 10px;
 }
 
+.thumbnail img {
+  height:220px;
+  width:100%;
+}
+
 #tag {
   border: 3px solid gray;
   border-radius: 12px;

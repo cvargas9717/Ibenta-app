@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     Price: DataTypes.FLOAT,
     Description: DataTypes.TEXT,
     Zipcode: DataTypes.STRING,
-    Picture: DataTypes.BLOB,
+    PictureURL: DataTypes.TEXT,
     Tags: DataTypes.ARRAY(DataTypes.STRING)
    });
    ListingInfo.associate = (models) => {

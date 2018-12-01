@@ -1,4 +1,5 @@
 import React from 'react';
+import {storage} from '../../../firebase';
 import {Col, Form, FormGroup, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class PostModal extends React.Component {
@@ -8,13 +9,16 @@ class PostModal extends React.Component {
     this.state = {
       price: '0.00',
       tag: '',
-      tags: []
+      tags: [],
+      image: null,
+      imageURL: ''
     }
 
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.onPriceBlur = this.onPriceBlur.bind(this);
     this.handleTagChange = this.handleTagChange.bind(this);
     this.onTagClick = this.onTagClick.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -54,7 +58,36 @@ class PostModal extends React.Component {
     this.setState({tags});
   }
 
+  handleImageChange = (event) => {
+    if (event.target.files[0]) {
+      const image = event.target.files[0];
+      console.log(image);
+      this.setState({
+        image: image
+      });
+      const uploadTask = storage.ref(`listingImages/${image.name}`).put(image);
+      uploadTask.on('state_changed', 
+      (snapshot) => {
+        // progress function
+      },
+      (error) => {
+        // error function
+        console.log(error);
+      },
+      () => {
+        // complete function   
+        storage.ref('listingImages').child(`${image.name}`).getDownloadURL().then(url => {
+          console.log(url);
+          this.setState({
+            imageURL: url
+          });
+        })
+      });
+    }
+  }
+
   handleSubmit = (event) => {
+
     var itemData = {
       Title: event.target.title.value,
       Subtitle: event.target.subtitle.value,
@@ -63,11 +96,9 @@ class PostModal extends React.Component {
       Price: event.target.price.value,
       Description: event.target.description.value,
       Zipcode: event.target.zipcode.value,
-      Picture: event.target.picture.value,
+      PictureURL: this.state.imageURL,
       Tags: this.state.tags
     }
-
-    //console.log(itemData);
 
     fetch('http://localhost:8080/createListing', {
       method: 'POST',
@@ -159,7 +190,7 @@ class PostModal extends React.Component {
             <FormGroup row>
               <Label for="" sm={5}>Upload Item Picture</Label>
               <Col sm={10}>
-                <Input type="file" name="picture"  />
+                <Input type="file" name="picture" accept=".jpg,.jpeg,.png" onChange={this.handleImageChange} />
               </Col>
             </FormGroup>
             <FormGroup row>

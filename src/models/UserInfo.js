@@ -47,8 +47,8 @@ module.exports = (sequelize, DataTypes) => {
     UniquePassword: {
       type: DataTypes.STRING,
     },
-    ProfilePic: DataTypes.BLOB,
-    GovernmentPic: DataTypes.BLOB
+    ProfilePicURL: DataTypes.TEXT,
+    GovernmentPicURL: DataTypes.TEXT
 
   });
 

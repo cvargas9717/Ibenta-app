@@ -60,13 +60,13 @@ class SignUpModal extends Component {
             <FormGroup row>
               <Label for="" sm={5}>Upload Profile Picture</Label>
               <Col sm={10}>
-                <Input type="file" name="ProfilePic"  />
+                <Input type="file" name="ProfilePic" onChange={this.props.handleProfilePicChange} />
               </Col>
             </FormGroup>
             <FormGroup row>
               <Label for="" sm={6}>Upload Government Issued ID </Label>
               <Col sm={10}>
-                <Input type="file" name="GovernmentPic"  />
+                <Input type="file" name="GovernmentPic" onChange={this.props.handleGovernmentPicChange} />
               </Col>
             </FormGroup>
             <Col sm={10}>

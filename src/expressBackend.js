@@ -35,8 +35,8 @@ app.post('/createUser', function (req, res) {
     EmailAddress: req.body.EmailAddress,
     ConfirmEmail: req.body.ConfirmEmail,
     UniquePassword: req.body.UniquePassword,
-    ProfilePic: req.body.ProfilePic,
-    GovernmentPic: req.body.GovernmentPic
+    ProfilePicURL: req.body.ProfilePicURL,
+    GovernmentPicURL: req.body.GovernmentPicURL
   })
   .then((post) => {
     console.log(post);
@@ -59,7 +59,7 @@ app.post('/createListing', function (req, res) {
    Price: req.body.Price,
    Description: req.body.Description,
    Zipcode: req.body.Zipcode,
-   Picture: req.body.Picture,
+   PictureURL: req.body.PictureURL,
    Tags: req.body.Tags
  })
  .then((post) => {
