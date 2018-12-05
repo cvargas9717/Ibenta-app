@@ -3,6 +3,7 @@ import Login from './Login.js';
 import Signup from './Signup.js';
 import Post from './Post.js';
 import SearchField from './SearchField.js';
+import Category from './Category.js'
 import { Collapse, Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -24,10 +25,13 @@ class NavigationBar extends Component {
       signUpLabel: 'Sign Up',
       searchLabel: 'Search',
       uploadLabel: 'Post',
+      category: 'All Categories'
     };
 
     this.openNav = this.openNav.bind(this);
     this.openSearch = this.openSearch.bind(this);
+    this.searchSubmit = this.searchSubmit.bind(this);
+    this.categoryChange = this.categoryChange.bind(this);
   }
 
   openNav() {
@@ -42,27 +46,37 @@ class NavigationBar extends Component {
   	});
   }
 
+  searchSubmit = (event) => {
+    console.log('searching for: ', event.target.search.value + this.state.category);
+    event.preventDefault();
+  }
+
+  categoryChange = (event) => {
+    this.setState({
+      category: event.target.value
+    });
+  }
+
   render() {
     return (
       <div>
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">Ibenta</NavbarBrand>
-          <NavbarToggler onClick={this.openNav} />
+          <NavbarToggler onClick={this.openNav} className="nav-toggler"/>
+          <Category onChange={this.categoryChange} />
+          <SearchField searchSubmit={this.searchSubmit} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto text-center" navbar>
-              <NavItem className='search-field'>
-                <SearchField />
-              </NavItem>
+            <Nav className="ml-auto text-center" id="navbar" navbar>
               <div className="divider" />
-              <NavItem className='upload-button'>
+              <NavItem >
                 <Post label={this.state.uploadLabel} />
               </NavItem>
               <div className="divider" />
-              <NavItem className='login-button'>
+              <NavItem >
                 <Login label={this.state.loginLabel} />
               </NavItem>
               <div className="divider" />
-              <NavItem className='signup-button'>
+              <NavItem >
                 <Signup label={this.state.signUpLabel} />
               </NavItem>
             </Nav>

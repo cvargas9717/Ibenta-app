@@ -11,18 +11,24 @@ function passwordsMatch(passwordSubmitted, storedPassword) {
 }
 
 passport.use(new LocalStrategy({
-    EmailAddress: 'logEmail',
+    usernameField: 'EmailAddress',
+    passwordField: 'UniquePassword'
   },
-  (email, password, done) => {
+  (username, password, done) => {
     UserInfo.findOne({
-      where: { logEmail },
+      where: { EmailAddress : username },
     }).then((user) => {
+
+      console.log(user.id + "<<<<<<<<<<<<<<")
+
+      console.log("GOT THIS FAR BRUH>>>>>>>>>>>>>>");
+
       if(!user) {
         console.log("Incorrect Email");
         return done(null, false, { message: 'Incorrect email.' });
       }
 
-      if (passwordsMatch(password, user.password) === false) {
+      if (passwordsMatch(password, user.UniquePassword) === false) {
         console.log("Incorrect password");
         return done(null, false, { message: 'Incorrect password.' });
       }
@@ -39,7 +45,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  UserInfo.findById(id).then((user) => {
+  UserInfo.findByPk(id).then((user) => {
     if (!user) {
       return done(null, false);
     }

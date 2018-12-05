@@ -3,10 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 import HomePage from './views/components/HomePage.js';
 import ProfilePage from './views/components/ProfilePage.js';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Route from 'react-router-dom/Route'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+// import Route from 'react-router-dom/Route'
 import SignUpAlert from './views/components/SignUpAlert.js';
-
 
 
 class App extends Component {
@@ -17,6 +16,9 @@ class App extends Component {
 
     }
   }
+
+
+
 
 
   render() {
@@ -48,12 +50,14 @@ class App extends Component {
             }/>
 
 
-          <Route path ="/profile" exact render = {
-            () => {
+
+
+          <Route path ="/profile/:id" exact strict render = {
+            ({match}) => {
               return (
               <ProfilePage
-                  //id = {}
-                  name = {"Charlie"}
+                  id = {match.params.id}
+                  //name = {match.params.id}
 
               />);
             }

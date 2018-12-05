@@ -5,6 +5,7 @@ const port = 8080
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const passport = require('./middlewares/auth');
@@ -40,6 +41,8 @@ app.post('/createUser', function (req, res) {
   })
   .then((post) => {
     console.log(post);
+
+
     res.send("User Created");
      //res.redirect('/success');
 
@@ -52,19 +55,49 @@ app.post('/createUser', function (req, res) {
 
 })
 
+app.post('/createListing', function (req, res) {
+  models.ListingInfo.create({
+   Title: req.body.Title,
+   Subtitle: req.body.Subtitle,
+   Category: req.body.Category,
+   Condition: req.body.Condition,
+   Price: req.body.Price,
+   Description: req.body.Description,
+   Zipcode: req.body.Zipcode,
+   Picture: req.body.Picture,
+   Tags: req.body.Tags
+ })
+ .then((post) => {
+   console.log(post);
+   //res.send("SUPPP");
+    //res.redirect('/');
+ })
+ .catch((err) => {
+   console.log('ERROR while creating a new listing');
+   res.redirect('/error');
+ })
+})
 
 
-// app.get('/userInfo', function (req, res) {
-//
-//   models.UserInfo.findAll()
-//       .then((info) => {
-//         res.send(JSON.stringify(info));
-//
-//       });
-//
-// })
+app.post('/a', function (req, res) {
+  console.log("This is the id >>> "+ req.body.id)
+  models.UserInfo.findByPk(req.body.id).then((user) => {
+    console.log(user+ " Just got this data" );
+    console.log(user.FirstName);
+
+    res.json({
+      id: user.id,
+      UserName : user.UserName,
+      FirstName: user.FirstName,
+      LastName: user.LastName,
+      EmailAddress: user.EmailAddress
+    });
 
 
+  });
+
+
+})
 
 
 

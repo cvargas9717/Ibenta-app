@@ -21,18 +21,7 @@ class Signup extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.setRedirect = this.setRedirect.bind(this);
-    this.renderRedirect = this.renderRedirect.bind(this);
   }
-
-
-
-
-    renderRedirect () {
-      console.log("qqqq")
-
-    }
-
-
 
 
   toggle() {
@@ -93,9 +82,7 @@ class Signup extends Component {
       });
 
       this.closeModal();
-      //this.setRedirect();
 
-      this.renderRedirect()
     }
 
   render() {
@@ -112,7 +99,7 @@ class Signup extends Component {
             userCreationStatus={this.state.status}
           />
 
-         <Button color="success" onClick={this.toggle}>
+         <Button color="success" onClick={this.toggle}  id="navitem">
             {this.props.label}
           </Button>
 
