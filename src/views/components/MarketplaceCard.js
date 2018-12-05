@@ -44,8 +44,8 @@ class MarketplaceCard extends Component {
         <div className="card-body">
           <h3 className="card-title">{this.props.data.Title}</h3>
           <h4 className="card-subtitle">${this.props.data.Price}</h4>
-          <h5 className="card-text text-muted">{this.state.city + ' ' + this.props.data.Zipcode}</h5>
-          <a href="#" className="buyButton round font-weight-bold">{this.props.buttonName}</a>
+          <h5 className="card-text text-muted location">{this.state.city + ' ' + this.props.data.Zipcode}</h5>
+          <a href={`/listing/${this.props.data.id}`} className="buyButton round font-weight-bold">{this.props.buttonName}</a>
         </div>
       </div>
     );

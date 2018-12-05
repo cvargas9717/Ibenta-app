@@ -32,7 +32,7 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <NavigationBar />
+        {/* <NavigationBar /> */}
         {this.state.marketplace}
       </div>
     );

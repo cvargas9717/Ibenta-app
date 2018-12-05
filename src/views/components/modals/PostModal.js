@@ -59,6 +59,15 @@ class PostModal extends React.Component {
     this.setState({tags});
   }
 
+  handleTagKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      const tag = event.target.value;
+      let tags = this.state.tags;
+      tags.push(tag);
+      this.setState({tag: '', tags});
+    }
+  }
+
   handleImageChange = (event) => {
     if (event.target.files[0]) {
       const image = event.target.files[0];
@@ -84,15 +93,6 @@ class PostModal extends React.Component {
           });
         })
       });
-    }
-  }
-
-  handleTagKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      const tag = event.target.value;
-      let tags = this.state.tags;
-      tags.push(tag);
-      this.setState({tag: '', tags});
     }
   }
 

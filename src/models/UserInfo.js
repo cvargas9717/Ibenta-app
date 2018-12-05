@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
 
   UserInfo.associate = (models) => {
     // associations can be defined here
+    //models.UserInfo.hasMany(models.ListingInfo);
   }
 
   //this is sequelize  lifecycle hook

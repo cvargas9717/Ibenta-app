@@ -8,13 +8,85 @@ class ProfilePage extends Component {
   constructor(props) {
     super(props);
 
+    this.state = ({
+      UserName: '',
+      FirstName: '',
+      LastName: '',
+      Zip: '',
+      EmailAddress: '',
+      ProfilePicURL: '',
+      numberOfListings: 0,
+      listings: [],
+    })
+  }
+
+  componentDidMount() {
+    console.log('this is the profile page component');
+    const params = this.props.match.params;
+    console.log(params);
+    console.log(params.userId);
+
+    // fetch user's info
+    fetch('http://localhost:8080/userInfo/' + params.userId)
+      .then((result) => {
+        if(result.ok) {
+          return result.json();
+        } else {
+          return [];
+        }
+      })
+      .then((jsonResult) =>{
+        console.log(jsonResult);
+        const user = jsonResult;
+        this.setState({
+          UserName: user.UserName,
+          FirstName: user.FirstName,
+          LastName: user.LastName,
+          Zip: user.Zip,
+          EmailAddress: user.EmailAddress,
+          ProfilePicURL: user.ProfilePicURL,
+        })
+      });
+    
+    // fetch user's listings
+    fetch('http://localhost:8080/sellerListing/' + params.userId)
+      .then((result) => {
+        if(result.ok) {
+          return result.json();
+        } else {
+          return [];
+        }
+      })
+      .then((jsonResult) => {
+        this.setState({
+          numberOfListings: jsonResult.count
+        });
+        return jsonResult.rows;
+      })
+      .then((listings) => {
+        const listingInfos = listings.map((item) => {
+          return (
+            <MarketplaceCard 
+              data={item}
+              className="col-xs-3"
+              width={"15rem"}
+              height={"25rem"}
+              buttonName={"Edit"}
+            />
+          );
+        })
+    
+        this.setState({
+          listings: listingInfos,
+        })
+      })
   }
 
 
 render() {
   return (
     <div>
-      <NavigationBar />
+      {/* <NavigationBar /> */}
       <h3></h3>
 
       <div className="App-header">
@@ -22,16 +94,14 @@ render() {
           <Row>
             <Col>
               <Jumbotron>
-                <h1>Welcome back {this.props.name}</h1>
-                <h5># of Postings: {6}</h5>
-              
-                <div className="row justify-content-center">
-                  <div className="col-xs-3"><MarketplaceCard width={"13rem"} height={"24rem"} buttonName={"Edit"}/></div>
-                  <div className="col-xs-3"><MarketplaceCard width={"13rem"} height={"24rem"} buttonName={"Edit"}/></div>
-                  <div className="col-xs-3"><MarketplaceCard width={"13rem"} height={"24rem"} buttonName={"Edit"}/></div>
-                  <div className="col-xs-3"><MarketplaceCard width={"13rem"} height={"24rem"} buttonName={"Edit"}/></div>
-                  <div className="col-xs-3"><MarketplaceCard width={"13rem"} height={"24rem"} buttonName={"Edit"}/></div>
-                  <div className="col-xs-3"><MarketplaceCard width={"13rem"} height={"24rem"} buttonName={"Edit"}/></div>
+                <h1>Welcome back {this.state.UserName}</h1>
+                <img 
+                  className='profile-pic rounded-circle'
+                  src={this.state.ProfilePicURL} 
+                />
+                <h5># of Postings: {this.state.numberOfListings}</h5>
+                <div className='row justify-content-center'>
+                  {this.state.listings}
                 </div>
               </Jumbotron>
             </Col>
@@ -56,7 +126,7 @@ render() {
       <Row>
         <Col>
           <Jumbotron>
-            <h1>Welcome back {this.props.name}</h1>
+            <h1>Welcome back {this.state.UserName}</h1>
             <p>
               This is a simple hero unit, a simple jumbotron-style component for calling
             </p>

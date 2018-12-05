@@ -57,11 +57,12 @@ class NavigationBar extends Component {
       }
     })
     .then((jsonResult) =>{
-      return jsonResult[0];
+      //return jsonResult[5];
+      console.log(jsonResult)
     })
-    .then((item) => {
-      console.log(item.Tags);
-    })
+    // .then((item) => {
+    //   //console.log(item.Title);
+    // })
 
 
     event.preventDefault();

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  var ListingInfo = sequelize.define('ListingInfo', {
+  const ListingInfo = sequelize.define('ListingInfo', {
     Title: DataTypes.STRING,
     Subtitle: DataTypes.STRING,
     Category: DataTypes.STRING,
@@ -8,10 +8,12 @@ module.exports = (sequelize, DataTypes) => {
     Description: DataTypes.TEXT,
     Zipcode: DataTypes.STRING,
     PictureURL: DataTypes.TEXT,
-    Tags: DataTypes.ARRAY(DataTypes.STRING)
+    Tags: DataTypes.ARRAY(DataTypes.STRING),
+    SellerId: DataTypes.UUID
    });
    ListingInfo.associate = (models) => {
     // associations can be defined here
+    //models.ListingInfo.belongsto(models.UserInfo);
   }
    return ListingInfo;
 };
