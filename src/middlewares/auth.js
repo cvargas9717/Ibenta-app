@@ -11,7 +11,7 @@ function passwordsMatch(passwordSubmitted, storedPassword) {
 }
 
 passport.use(new LocalStrategy({
-    EmailField: 'logEmail',
+    EmailAddress: 'logEmail',
   },
   (email, password, done) => {
     UserInfo.findOne({

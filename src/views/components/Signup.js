@@ -3,6 +3,10 @@ import { Button } from 'reactstrap';
 import { storage } from '../../firebase';
 import SignUpModal from './modals/SignUpModal.js';
 import { BrowserRouter as Router, Route, Link,Redirect } from "react-router-dom";
+import SignUpAlert from './SignUpAlert.js';
+import Marketplace from './Marketplace.js';
+import HomePage from './HomePage.js';
+import ProfilePage from './ProfilePage.js';
 
 class Signup extends Component {
   constructor(props) {
@@ -13,7 +17,9 @@ class Signup extends Component {
       ProfilePic: null,
       ProfilePicURL: '',
       GovernmentPic: null,
-      GovernmentPicURL: ''
+      GovernmentPicURL: '',
+      render: false,
+      status: "/success"
     };
 
     this.toggle = this.toggle.bind(this);
@@ -27,14 +33,8 @@ class Signup extends Component {
 
 
     renderRedirect () {
-      console.log(this.state.redirect);
+      console.log("qqqq")
 
-      if (this.state.redirect) {
-        console.log(this.state.redirect);
-        return <Redirect to='/google.com' />
-        console.log("YOOO");
-      }
-      console.log("hey");
     }
 
 
@@ -44,13 +44,17 @@ class Signup extends Component {
     this.setState({
       modal: !this.state.modal
     });
+    //console.log("qwe")
   }
 
   closeModal(){
     this.setState({
-      modal: false
-    });
+      modal: false,
+      render : true
+    })
+
   }
+
 
   setRedirect () {
     this.setState({
@@ -137,6 +141,16 @@ class Signup extends Component {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(userData)
+      }).then((res) => {
+
+
+        if(res.ok) {
+          window.location.replace("/success");
+        }
+        else{
+          window.location.replace("/error");
+        }
+
       });
 
       this.closeModal();
@@ -147,6 +161,7 @@ class Signup extends Component {
 
   render() {
     return (
+
       <div>
 
       <SignUpModal
@@ -161,6 +176,10 @@ class Signup extends Component {
         {this.props.label}
       </Button>
       </div>
+
+
+
+
     );
   }
 }

@@ -10,6 +10,7 @@ const expressSession = require('express-session');
 const passport = require('./middlewares/auth');
 
 //app.use(cors());
+var router = express.Router();
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -130,6 +131,8 @@ app.get('/listingInfo/:listingId', function (req, res) {
     })
 
 })
+
+
 
 // Load up all of the controllers
 const controllers = require('./controllers');

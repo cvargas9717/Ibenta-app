@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Marketplace from './Marketplace.js';
 import NavigationBar from './NavigationBar.js';
+import SignUpAlert from './SignUpAlert.js';
 
 class HomePage extends Component {
 
@@ -30,12 +31,17 @@ class HomePage extends Component {
   }
 
   render() {
+
+
     return (
+
       <div>
         {/* <NavigationBar /> */}
         {this.state.marketplace}
       </div>
     );
+
+
   }
 }
 

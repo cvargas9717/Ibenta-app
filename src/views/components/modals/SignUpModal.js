@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Col, Form, FormGroup, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { BrowserRouter as Router, Route, Link,Redirect } from "react-router-dom";
 
 class SignUpModal extends Component {
   constructor(props) {
@@ -8,13 +9,13 @@ class SignUpModal extends Component {
 
   }
 
-
   render() {
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className}>
         <ModalHeader toggle={this.props.toggle}>Sign Up for Free!</ModalHeader>
         <ModalBody>
           <Form onSubmit={this.props.handleSubmit}>
+
             <FormGroup row>
               <Label for="" sm={3}>Username</Label>
               <Col sm={10}>
@@ -70,11 +71,13 @@ class SignUpModal extends Component {
               </Col>
             </FormGroup>
             <Col sm={10}>
-              <Button color="success">Create Account</Button>
+               <Button color="success" ><Link to={"/success"}></Link>Create Account</Button>
             </Col>
           </Form>
         </ModalBody>
       </Modal>
+
+
     );
   }
 }
