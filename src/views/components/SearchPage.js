@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MarketplaceCard from './MarketplaceCard.js';
 import NavigationBar from './NavigationBar.js';
 import { Col } from 'reactstrap';
+import queryString from 'query-string';
 
 class SearchPage extends Component {
 
@@ -37,14 +38,17 @@ class SearchPage extends Component {
 
   getMatchingItems = (jsonResult) => {
     const params = this.props.location;
-    const category = params.state.category;
-    const keywords = params.state.keywords;
+    // const category = params.state.category;
+    // const keywords = params.state.keywords;
+    const values = queryString.parse(params.search)
+    const category = values.category;
+    const keywords = values.keywords;
     console.log(category + ' ' + keywords);
     let postings = [];
     for (var i=0; i < jsonResult.length; i++) {
       if ((category === 'All Categories' || jsonResult[i].Category === category) && this.matchKeywords(keywords, jsonResult[i]) ) {
         let item = (<div className="item-group" key={i}>
-                      <MarketplaceCard className="col-auto" name={jsonResult[i].Title} price={jsonResult[i].Price} zip={jsonResult[i].Zipcode} width={"18rem"} height={"25rem"} buttonName={"I want it!"}/>
+                      <MarketplaceCard className="col-auto" data={jsonResult[i]} width={"18rem"} height={"25rem"} buttonName={"I want it!"}/>
                    </div>)
                    console.log(this.props);
         postings.push(item);
@@ -53,7 +57,7 @@ class SearchPage extends Component {
     if (postings.length === 0) {
       console.log("The search came up empty!");
     }
-    this.setState({postings});
+    this.setState({postings: postings});
   }
 
   matchKeywords = (keywords, item) => {
@@ -86,10 +90,10 @@ class SearchPage extends Component {
   }
 
   render() {
-
+    console.log('this is the search page component');
     return (
       <div>
-        <NavigationBar />
+        {/* <NavigationBar /> */}
         <Col className="App-header" >{this.state.postings}</Col>
       </div>
     )

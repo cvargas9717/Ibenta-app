@@ -4,7 +4,7 @@ import Signup from './Signup.js';
 import Post from './Post.js';
 import SearchField from './SearchField.js';
 import Category from './Category.js';
-import { withRouter } from 'react-router';
+//import { withRouter } from 'react-router';
 import { Collapse, Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -61,28 +61,30 @@ class NavigationBar extends Component {
 
   searchSubmit = (event) => {
     console.log('searching for: ', this.state.searchfield + ' ' + this.state.category);
-    fetch('http://localhost:8080/listingInfo')
-    .then((result) => {
-      if(result.ok) {
-        return result.json();
-      } else {
-        return [];
-      }
-    })
-    .then((jsonResult) =>{
+    // fetch('http://localhost:8080/listingInfo')
+    // .then((result) => {
+    //   if(result.ok) {
+    //     return result.json();
+    //   } else {
+    //     return [];
+    //   }
+    // })
+    // .then((jsonResult) =>{
       let category = this.state.category;
       let keywords = this.state.searchfield;
-      this.props.history.push({
-        pathname: '/search',
-        //search: `?category=${category}?keywords=${keywords}`,
-        state: {category, keywords}
-      })
-      if (this.props.location.pathname === '/search') {
-        window.location.reload();
-      }
-    })
+      let search = `/search?category=${category}&keywords=${keywords}`;
+      // this.props.history.push({
+      //   pathname: '/search',
+      //   //search: `?category=${category}?keywords=${keywords}`,
+      //   state: {category, keywords}
+      // })
+      // if (this.props.location.pathname === '/search') {
+      //   window.location.reload();
+      // }
+      window.location.replace(search);
+    // })
 
-    event.preventDefault();
+    // event.preventDefault();
   }
 
   categoryChange = (event) => {
@@ -111,7 +113,8 @@ class NavigationBar extends Component {
             <NavbarBrand href="/">Ibenta</NavbarBrand>
             <NavbarToggler onClick={this.openNav} className="nav-toggler"/>
             <Category onChange={this.categoryChange} />
-            <SearchField searchSubmit={this.searchSubmit} />
+            <SearchField onChange={this.updateSearchBar} searchSubmit={this.searchSubmit} />
+            <Button onClick={this.searchSubmit} className="desktop-category">Go</Button>
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto text-center" id="navbar" navbar>
                 <div className="divider" />
@@ -171,4 +174,4 @@ class NavigationBar extends Component {
 
 }
 
-export default withRouter(NavigationBar);
+export default NavigationBar;
