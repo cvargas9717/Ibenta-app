@@ -5,9 +5,9 @@ class MarketplaceCard extends Component {
     super(props);
     this.state = ({
       pictureUrl : "https://cnet2.cbsistatic.com/img/IwuqCeoFETSbn95uZhqoHKaFu8A=/2017/09/26/4c6ec5f4-8dcb-45c7-8770-e87208e3d3ae/17bose-quietcomfort-35-ii.jpg",
-      itemName : "Bose QuietComfort 35 II",
-      itemPrice : 250,
-      location : "New York, 10012",
+      itemName : this.props.name,
+      itemPrice : this.props.price,
+      location : this.props.zip,
       width : this.props.width,
       height : this.props.height,
       buttonName : this.props.buttonName

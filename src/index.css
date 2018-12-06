@@ -88,6 +88,10 @@ code {
   margin-left: 5px;
 }
 
+.post-form {
+  width: 10%;
+}
+
 @media only screen and (max-width: 600px) {
   .desktop-category {
     visibility: hidden;
