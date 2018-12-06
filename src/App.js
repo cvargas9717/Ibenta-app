@@ -4,6 +4,7 @@ import './App.css';
 import HomePage from './views/components/HomePage.js';
 import ProfilePage from './views/components/ProfilePage.js';
 import ListingInfoPage from './views/components/ListingInfoPage.js';
+import SearchPage from './views/components/SearchPage.js';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Route from 'react-router-dom/Route'
 
@@ -38,6 +39,8 @@ class App extends Component {
               />);
             }
           }/>
+
+        <Route path ="/search:category?:keywords?/" component={SearchPage}/>
 
 
 
