@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     Zipcode: DataTypes.STRING,
     PictureURL: DataTypes.TEXT,
     Tags: DataTypes.ARRAY(DataTypes.STRING),
-    SellerId: DataTypes.UUID
+    SellerId: DataTypes.INTEGER
    });
    ListingInfo.associate = (models) => {
     // associations can be defined here

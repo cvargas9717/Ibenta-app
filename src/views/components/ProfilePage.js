@@ -3,12 +3,12 @@ import NavigationBar from './NavigationBar.js';
 import {Jumbotron, Container, Row, Col} from 'reactstrap';
 import MarketplaceCard from './MarketplaceCard.js';
 
+
 class ProfilePage extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = ({
+    this.state = {
       UserName: '',
       FirstName: '',
       LastName: '',
@@ -17,7 +17,43 @@ class ProfilePage extends Component {
       ProfilePicURL: '',
       numberOfListings: 0,
       listings: [],
-    })
+    }
+
+    this.findUserByID = this.findUserByID.bind(this);
+    //this.findUserByID();
+  }
+
+  findUserByID(){
+
+    const userID = {
+      //id : this.props.id
+      id : this.props.match.params.userId
+    };
+
+    console.log(userID);
+
+    fetch('http://localhost:8080/a', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(userID)
+    }).then((res) => {
+
+      console.log(res);
+
+      if(res.ok) {
+
+        res.json().then(data => ({
+          data: data
+        })).then(res => {
+
+          this.setState({AccountName: res.data.UserName});
+
+
+        });
+
+      }
+
+    });
   }
 
   componentDidMount() {
@@ -84,6 +120,8 @@ class ProfilePage extends Component {
 
 
 render() {
+
+  console.log(this.props)
   return (
     <div>
       {/* <NavigationBar /> */}
@@ -94,7 +132,7 @@ render() {
           <Row>
             <Col>
               <Jumbotron>
-                <h1>Welcome back {this.state.UserName}</h1>
+                <h1>Welcome back {this.state.UserName}!</h1>
                 <img 
                   className='profile-pic rounded-circle'
                   src={this.state.ProfilePicURL} 

@@ -22,6 +22,7 @@ class NavigationBar extends Component {
       isOpen: false,
       isSearchOpen: false,
       loginLabel: 'Log-in',
+      logoutLabel: 'Log Out',
       signUpLabel: 'Sign Up',
       searchLabel: 'Search',
       uploadLabel: 'Post',
@@ -32,6 +33,15 @@ class NavigationBar extends Component {
     this.openSearch = this.openSearch.bind(this);
     this.searchSubmit = this.searchSubmit.bind(this);
     this.categoryChange = this.categoryChange.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  logout() {
+    window.localStorage.removeItem('isLoggedIn');
+    window.localStorage.removeItem('userName');
+    window.localStorage.removeItem('userId');
+    window.localStorage.removeItem('userProfilePicURL');
+    window.location.replace('/');
   }
 
   openNav() {
@@ -75,8 +85,42 @@ class NavigationBar extends Component {
   }
 
   render() {
-    return (
-      <div>
+    const isLoggedIn = window.localStorage.getItem('isLoggedIn');
+    const profilePicURL = window.localStorage.getItem('userProfilePicURL');
+    const userId = window.localStorage.getItem('userId');
+    console.log(userId);
+    console.log(profilePicURL);
+    console.log('user is logged in: ' + isLoggedIn);
+    if (!isLoggedIn) {
+      return (
+        <div>
+          <Navbar color="light" light expand="md">
+            <NavbarBrand href="/">Ibenta</NavbarBrand>
+            <NavbarToggler onClick={this.openNav} className="nav-toggler"/>
+            <Category onChange={this.categoryChange} />
+            <SearchField searchSubmit={this.searchSubmit} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto text-center" id="navbar" navbar>
+                <div className="divider" />
+                <NavItem >
+                  <Post label={this.state.uploadLabel} />
+                </NavItem>
+                <div className="divider" />
+                <NavItem >
+                  <Login label={this.state.loginLabel} />
+                </NavItem>
+                <div className="divider" />
+                <NavItem >
+                  <Signup label={this.state.signUpLabel} />
+                </NavItem>
+              </Nav>
+            </Collapse>
+          </Navbar>
+        </div>
+      );
+    } else {
+      return (
+        <div>
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">Ibenta</NavbarBrand>
           <NavbarToggler onClick={this.openNav} className="nav-toggler"/>
@@ -90,17 +134,25 @@ class NavigationBar extends Component {
               </NavItem>
               <div className="divider" />
               <NavItem >
-                <Login label={this.state.loginLabel} />
+                <Button color="info" onClick={this.logout} id="navitem">
+                  {this.state.logoutLabel}
+                </Button>
               </NavItem>
               <div className="divider" />
-              <NavItem >
-                <Signup label={this.state.signUpLabel} />
+              <NavItem id="navitem">
+                <a href={`/profile/${userId}`}>
+                  <img 
+                    src={profilePicURL} 
+                    className="super-small-profile-pic rounded-circle"  
+                  />
+                </a>
               </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
       </div>
-    );
+      );
+    }
   }
 
 }

@@ -2,21 +2,36 @@ const express = require('express');
 const models = require('../models');
 const passport = require('../middlewares/auth');
 
-const router = express.Router();
+const router = require('express').Router();
 const UserInfo = models.UserInfo;
-
 
 
 router.post('/login',
   passport.authenticate('local', { failureRedirect: '/auth/error' }),
   (req, res) => {
-    res.json({
-      id: req.user.id,
-      firstName: req.user.firstName,
-      lastName: req.user.lastName,
-      email: req.user.email,
-    });
+
+
+    if (req.isAuthenticated()) {
+
+      console.log("YOOO")
+      console.log(req.user.FirstName)
+
+      //Send data to client --> profile page
+      res.json({
+        id: req.user.id,
+        UserName: req.user.UserName,
+        FirstName: req.user.FirstName,
+        EmailAddress: req.user.EmailAddress,
+        UniquePassword: req.user.UniquePassword,
+        ProfilePicURL: req.user.ProfilePicURL
+      });
+
+
+    }
+
+
   });
+
 
 
 router.get('/logout', (req, res) => {
@@ -25,11 +40,11 @@ router.get('/logout', (req, res) => {
 });
 
 
-router.get('/profile',
-  passport.redirectIfNotLoggedIn('/auth/error'),
-  (req, res) => {
-    res.json({ msg: "This is the profile page for: "+req.user.email });
-});
+// router.get('/profile',
+//   passport.redirectIfNotLoggedIn('/auth/error'),
+//   (req, res) => {
+//     res.json({ msg: "This is the profile page for: "+req.user.email });
+// });
 
 
 module.exports = router;

@@ -56,9 +56,26 @@ class ListingInfoPage extends Component {
           SellerEmailAddress: '',
           SellerProfilePicURL: '',
         });
-        return jsonResult.Zipcode;
-      })
-      .then((zip) => {
+        const sellerId = item.SellerId;
+        const zip = item.Zipcode;
+        fetch('http://localhost:8080/userInfo/' + sellerId)
+        .then((result) => {
+          if(result.ok) {
+            return result.json();
+          } else {
+            return [];
+          }
+        })
+        .then((jsonResult) =>{
+          console.log(jsonResult);
+          const user = jsonResult;
+          this.setState({
+            SellerName: user.UserName,
+            SellerEmailAddress: user.EmailAddress,
+            SellerProfilePicURL: user.ProfilePicURL,
+          })
+        });
+
         if (zip.length === 5) {
           const url = "https://ctp-zip-api.herokuapp.com/zip/" + zip;
           fetch(url)
@@ -78,56 +95,61 @@ class ListingInfoPage extends Component {
               }
           });
         }
-      })
-
-    fetch('http://localhost:8080/userInfo/' + params.userId)
-      .then((result) => {
-        if(result.ok) {
-          return result.json();
-        } else {
-          return [];
-        }
-      })
-      .then((jsonResult) =>{
-        console.log(jsonResult);
-        const user = jsonResult;
-        this.setState({
-          SellerName: user.UserName,
-          SellerEmailAddress: user.EmailAddress,
-          SellerProfilePicURL: user.ProfilePicURL,
-        })
       });
-
-  }
+    }
 
   render() {
+    const tags = this.state.Tags.map((tag, i) =>
+      <div className="tag-group">
+        <a href="#" id="tag" className="col-auto" key={i}>{tag}</a>
+      </div>
+    );
+
     return (
       <div className="App-header">
         <Container>
-          <Row>
-            <Col>
-              <Jumbotron>
-                {/* <h1>Welcome back, {this.state.UserName}!</h1> */}
-                <img 
-                  className='img-thumbnail'
-                  src={this.state.PictureURL} 
-                />
-                <h5>{this.state.city}</h5>
-                <div className='row justify-content-center'>
-                {/* TODO: Beautify the UI */}
-                  {this.state.listings}
-                  {this.state.Title}
-                  {this.state.Subtitle}
-                  {this.state.Category}
-                  {this.state.Condition}
-                  {this.state.Price}
-                  {this.state.Description}
-                  {this.state.Tags}
+          <Jumbotron>
+          {/* <Row>
+            <Col> */}
+            <div className="row justify-content-center">
+
+                <div className="col-xs-4">
+                  <img 
+                    className="img-thumbnail listing-pic"
+                    src={this.state.PictureURL} 
+                  />
+                  <h5>{this.state.city + ' ' + this.state.Zipcode}</h5>
                 </div>
 
-              </Jumbotron>
-            </Col>
-          </Row>
+                <div className="col-xs-8 text-left">
+                  <img 
+                    className="small-profile-pic rounded-circle"
+                    src={this.state.SellerProfilePicURL}
+                  />
+                  
+                  {this.state.SellerName}
+                  <div className="divider"></div>
+                  <a href={`mailto:${this.state.SellerEmailAddress}`}>Contact</a>
+                  
+                  <hr />
+
+                  <h3>{this.state.Title}</h3>
+                  <h4>{this.state.Subtitle}</h4>
+                    {/* TODO: Beautify the UI */}
+                    <div>{this.state.Category}</div>
+                    <div>{this.state.Condition}</div>
+                    <div>{'$' + this.state.Price}</div>
+                    <div>{this.state.Description}</div>
+                    <br />
+                    <div>{tags}</div>
+
+
+                </div>
+                
+            </div>
+            {/* </Col>
+          </Row> */}
+          </Jumbotron>
         </Container>
       </div>
     );

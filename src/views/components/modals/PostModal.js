@@ -11,7 +11,8 @@ class PostModal extends React.Component {
       tag: '',
       tags: [],
       image: null,
-      imageURL: ''
+      imageURL: '',
+      progress: 0
     }
 
     this.handlePriceChange = this.handlePriceChange.bind(this);
@@ -79,6 +80,8 @@ class PostModal extends React.Component {
       uploadTask.on('state_changed', 
       (snapshot) => {
         // progress function
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        this.setState({progress});
       },
       (error) => {
         // error function
@@ -97,6 +100,7 @@ class PostModal extends React.Component {
   }
 
   handleSubmit = (event) => {
+    const sellerId = window.localStorage.getItem('userId');
 
     var itemData = {
       Title: event.target.title.value,
@@ -107,7 +111,8 @@ class PostModal extends React.Component {
       Description: event.target.description.value,
       Zipcode: event.target.zipcode.value,
       PictureURL: this.state.imageURL,
-      Tags: this.state.tags
+      Tags: this.state.tags,
+      SellerId: sellerId? sellerId : 3
     }
 
     fetch('http://localhost:8080/createListing', {
@@ -198,9 +203,13 @@ class PostModal extends React.Component {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="" sm={5}>Upload Item Picture</Label>
-              <Col sm={10}>
+              <Label for="" sm={12}>Upload Item Picture</Label>
+              <Col sm={6}>
                 <Input type="file" name="picture" accept=".jpg,.jpeg,.png" onChange={this.handleImageChange} />
+              </Col>
+              <Col sm={5}>
+                <progress value={this.state.progress} max="100"/>
+                <p className='text-center'>{this.state.progress + '%'}</p>
               </Col>
             </FormGroup>
             <FormGroup row>

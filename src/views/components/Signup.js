@@ -26,18 +26,7 @@ class Signup extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.setRedirect = this.setRedirect.bind(this);
-    this.renderRedirect = this.renderRedirect.bind(this);
   }
-
-
-
-
-    renderRedirect () {
-      console.log("qqqq")
-
-    }
-
-
 
 
   toggle() {
@@ -145,18 +134,29 @@ class Signup extends Component {
 
 
         if(res.ok) {
-          window.location.replace("/success");
+          res.json().then(data => ({
+            data: data,
+            status: res.status
+          })).then(res => {
+              console.log(res.status, res.data.FirstName)
+                //window.location.replace("/success");
+                //window.location.replace("/profile/?id="+res.data.id)
+                window.location.replace("/profile/"+res.data.id);
+                window.localStorage.setItem('userName', res.data.UserName);
+                window.localStorage.setItem('userProfilePicURL', res.data.ProfilePicURL);
+                window.localStorage.setItem('userId', res.data.id);
+                window.localStorage.setItem('isLoggedIn', true)
+          });
         }
         else{
-          window.location.replace("/error");
+          //window.location.replace("/error");
+          console.log('error');
         }
 
       });
 
       this.closeModal();
-      //this.setRedirect();
 
-      this.renderRedirect()
     }
 
   render() {
@@ -171,10 +171,12 @@ class Signup extends Component {
         toggle={this.toggle}
         handleGovernmentPicChange={this.handleGovernmentPicChange}
         handleProfilePicChange={this.handleProfilePicChange}
+        userCreationStatus={this.state.status}
       />
-    <Button color="success" onClick={this.toggle} id="navitem">
+      <Button color="success" onClick={this.toggle} id="navitem">
         {this.props.label}
       </Button>
+
       </div>
 
 

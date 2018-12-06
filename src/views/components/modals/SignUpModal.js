@@ -71,7 +71,7 @@ class SignUpModal extends Component {
               </Col>
             </FormGroup>
             <Col sm={10}>
-               <Button color="success" ><Link to={"/success"}></Link>Create Account</Button>
+               <Button color="success" >Create Account</Button>
             </Col>
           </Form>
         </ModalBody>

@@ -99,6 +99,23 @@ code {
   margin: 10px;
 }
 
+.small-profile-pic {
+  width: 4rem;
+  height: 4rem;
+  margin: 5px;
+}
+
+.super-small-profile-pic {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.listing-pic {
+  width: 30rem;
+  height: 26rem;
+  margin: 10px 50px;
+}
+
 .location {
   font-size: 1rem;
 }

@@ -4,10 +4,11 @@ const models = require('../models');
 const router = express.Router();
 
 
-router.get('/', (req, res) => {
+router.get('/profile', (req, res) => {
   res.json({
     msg: "Successful GET to '/' route"
   });
+
 });
 
 router.post('/', (req, res) => {

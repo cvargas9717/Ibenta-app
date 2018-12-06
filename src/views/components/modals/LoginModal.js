@@ -9,22 +9,22 @@ class LoginModal extends React.Component {
         <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className}>
             <ModalHeader toggle={this.props.toggle}>Login</ModalHeader>
             <ModalBody>
-                <Form>
+                <Form onSubmit={this.props.handleSubmit} >
                     <FormGroup row>
                       <Label for="exampleEmail" sm={2}>Email</Label>
                       <Col sm={10}>
-                        <Input type="email" name="logEmail" id="exampleEmail"  />
+                        <Input type="email" name="EmailAddress" id="exampleEmail"  />
                       </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label for="examplePassword" sm={2}>Password</Label>
                       <Col sm={10}>
-                        <Input type="password" name="logPassword" id="examplePassword"  />
+                        <Input type="password" name="UniquePassword" id="examplePassword"  />
                       </Col>
                     </FormGroup>
                     <FormGroup>
                       <Col sm={10}>
-                        <Button color="success" onClick={this.props.toggle}>Log in</Button>
+                        <Button color="success" >Log in</Button>
                       </Col>
                     </FormGroup>
                 </Form>

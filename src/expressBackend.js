@@ -5,6 +5,7 @@ const port = 8080;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const passport = require('./middlewares/auth');
@@ -41,15 +42,19 @@ app.post('/createUser', function (req, res) {
     GovernmentPicURL: req.body.GovernmentPicURL
   })
   .then((user) => {
-    //console.log(user);
+    console.log(user);
+    res.json(user);
     //res.send("User Created");
     //res.redirect('/');
-    req.login(user, () =>
-      res.redirect(`/profile/${req.user.id}`)
-    );
+    // req.login(user, () =>
+    //   //res.redirect(`/profile/${req.user.id}`)
+    //   //res.redirect('http://localhost:3000/profile/3')
+    //   res.send('user created and logged in')
+    // );
   })
   .catch((err) => {
     console.log('ERROR while creating a new user');
+    console.log(err);
     res.redirect('/error');
   })
 
@@ -64,13 +69,13 @@ app.post('/createListing', function (req, res) {
    Price: req.body.Price,
    Description: req.body.Description,
    Zipcode: req.body.Zipcode,
-   PictureURL: req.body.PictureURL,
+   PictureURL: req.user,
    Tags: req.body.Tags,
-   SellerId: 3
+   SellerId: req.body.SellerId
  })
  .then((post) => {
-   //console.log(post);
-   res.redirect(`'/profile/3'`)
+   console.log(post);
+   //res.redirect(`/profile/${req.user.id}`)
    //res.send("SUPPP");
     //res.redirect('/');
  })
@@ -123,13 +128,27 @@ app.get('/sellerListing/:sellerId', function (req, res) {
 })
 
 app.get('/listingInfo/:listingId', function (req, res) {
-
   models.ListingInfo.findById(req.params.listingId)
-    .then((info) => {
-      res.send(JSON.stringify(info));
-      console.log(info)
-    })
+  .then((info) => {
+    res.send(JSON.stringify(info));
+    console.log(info)
+  });
+})
 
+app.post('/a', function (req, res) {
+  console.log("This is the id >>> "+ req.body.id)
+  models.UserInfo.findByPk(req.body.id).then((user) => {
+    console.log(user+ " Just got this data" );
+    console.log(user.FirstName);
+
+    res.json({
+      id: user.id,
+      UserName : user.UserName,
+      FirstName: user.FirstName,
+      LastName: user.LastName,
+      EmailAddress: user.EmailAddress
+    });
+  });
 })
 
 
