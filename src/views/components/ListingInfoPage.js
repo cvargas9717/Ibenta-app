@@ -113,7 +113,7 @@ class ListingInfoPage extends Component {
             <Col> */}
             <div className="row justify-content-center">
 
-                <div className="col-xs-4">
+                <div className="col-xs-7">
                   <img 
                     className="img-thumbnail listing-pic"
                     src={this.state.PictureURL} 
@@ -121,7 +121,7 @@ class ListingInfoPage extends Component {
                   <h5>{this.state.city + ' ' + this.state.Zipcode}</h5>
                 </div>
 
-                <div className="col-xs-8 text-left">
+                <div className="col-xs-5 text-left" id="listing-info-section">
                   <img 
                     className="small-profile-pic rounded-circle"
                     src={this.state.SellerProfilePicURL}
@@ -136,10 +136,10 @@ class ListingInfoPage extends Component {
                   <h3>{this.state.Title}</h3>
                   <h4>{this.state.Subtitle}</h4>
                     {/* TODO: Beautify the UI */}
-                    <div>{this.state.Category}</div>
-                    <div>{this.state.Condition}</div>
-                    <div>{'$' + this.state.Price}</div>
-                    <div>{this.state.Description}</div>
+                    <div>Category: {this.state.Category}</div>
+                    <div>Condition: {this.state.Condition}</div>
+                    <div>Price: {'$' + this.state.Price}</div>
+                    <div>Description: {this.state.Description}</div>
                     <br />
                     <div>{tags}</div>
 
