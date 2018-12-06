@@ -139,9 +139,9 @@ class Signup extends Component {
             status: res.status
           })).then(res => {
               console.log(res.status, res.data.FirstName)
-                //window.location.replace("/success");
+                window.location.replace("/success");
                 //window.location.replace("/profile/?id="+res.data.id)
-                window.location.replace("/profile/"+res.data.id);
+                //window.location.replace("/profile/"+res.data.id);
                 window.localStorage.setItem('userName', res.data.UserName);
                 window.localStorage.setItem('userProfilePicURL', res.data.ProfilePicURL);
                 window.localStorage.setItem('userId', res.data.id);
@@ -149,7 +149,7 @@ class Signup extends Component {
           });
         }
         else{
-          //window.location.replace("/error");
+          window.location.replace("/error");
           console.log('error');
         }
 
