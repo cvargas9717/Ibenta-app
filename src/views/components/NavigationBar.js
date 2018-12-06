@@ -3,7 +3,8 @@ import Login from './Login.js';
 import Signup from './Signup.js';
 import Post from './Post.js';
 import SearchField from './SearchField.js';
-import Category from './Category.js'
+import Category from './Category.js';
+import { withRouter } from 'react-router';
 import { Collapse, Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -26,13 +27,15 @@ class NavigationBar extends Component {
       signUpLabel: 'Sign Up',
       searchLabel: 'Search',
       uploadLabel: 'Post',
-      category: 'All Categories'
+      category: 'All Categories',
+      searchfield: ''
     };
 
     this.openNav = this.openNav.bind(this);
     this.openSearch = this.openSearch.bind(this);
     this.searchSubmit = this.searchSubmit.bind(this);
     this.categoryChange = this.categoryChange.bind(this);
+    this.updateSearchBar = this.updateSearchBar.bind(this);
     this.logout = this.logout.bind(this);
   }
 
@@ -57,7 +60,7 @@ class NavigationBar extends Component {
   }
 
   searchSubmit = (event) => {
-    console.log('searching for: ', event.target.search.value + this.state.category);
+    console.log('searching for: ', this.state.searchfield + ' ' + this.state.category);
     fetch('http://localhost:8080/listingInfo')
     .then((result) => {
       if(result.ok) {
@@ -67,13 +70,17 @@ class NavigationBar extends Component {
       }
     })
     .then((jsonResult) =>{
-      //return jsonResult[5];
-      console.log(jsonResult)
+      let category = this.state.category;
+      let keywords = this.state.searchfield;
+      this.props.history.push({
+        pathname: '/search',
+        //search: `?category=${category}?keywords=${keywords}`,
+        state: {category, keywords}
+      })
+      if (this.props.location.pathname === '/search') {
+        window.location.reload();
+      }
     })
-    // .then((item) => {
-    //   //console.log(item.Title);
-    // })
-
 
     event.preventDefault();
   }
@@ -81,6 +88,12 @@ class NavigationBar extends Component {
   categoryChange = (event) => {
     this.setState({
       category: event.target.value
+    });
+  }
+
+  updateSearchBar = (event) => {
+    this.setState({
+      searchfield: event.target.value
     });
   }
 
@@ -125,7 +138,8 @@ class NavigationBar extends Component {
           <NavbarBrand href="/">Ibenta</NavbarBrand>
           <NavbarToggler onClick={this.openNav} className="nav-toggler"/>
           <Category onChange={this.categoryChange} />
-          <SearchField searchSubmit={this.searchSubmit} />
+          <SearchField searchSubmit={this.searchSubmit} onChange={this.updateSearchBar} />
+          <Button onClick={this.searchSubmit} className="desktop-category">Go</Button>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto text-center" id="navbar" navbar>
               <div className="divider" />
@@ -157,4 +171,4 @@ class NavigationBar extends Component {
 
 }
 
-export default NavigationBar;
+export default withRouter(NavigationBar);

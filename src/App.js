@@ -8,7 +8,9 @@ import NavigationBar from './views/components/NavigationBar.js';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 // import Route from 'react-router-dom/Route'
 import SignUpAlert from './views/components/SignUpAlert.js';
-
+import SearchPage from './views/components/SearchPage.js';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Route from 'react-router-dom/Route'
 
 class App extends Component {
 
@@ -18,10 +20,6 @@ class App extends Component {
 
     }
   }
-
-
-
-
 
   render() {
 
@@ -69,6 +67,7 @@ class App extends Component {
               }
             }/>
 
+            <Route path ="/search:category?:keywords?/" component={SearchPage}/>
 
 
 
@@ -128,6 +127,7 @@ class App extends Component {
 
         </div>
       </Router> */
+
 
 
 

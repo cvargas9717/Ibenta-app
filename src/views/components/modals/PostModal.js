@@ -129,8 +129,8 @@ class PostModal extends React.Component {
   render() {
 
     const tags = this.state.tags.map((tag, i) =>
-      <div className="tag-group">
-        <a href="#" id="tag" className="col-auto" key={i} onClick={() => this.onTagClick(i)}>{tag}</a>
+      <div className="tag-group" key={i} >
+        <a href="#" id="tag" className="col-auto" onClick={() => this.onTagClick(i)}>{tag}</a>
       </div>
     );
 
@@ -152,10 +152,10 @@ class PostModal extends React.Component {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Col>
-                <Label for="" sm={3}>Category:</Label>
+              <Col sm={3}>
+                <Label >Category:</Label>
               </Col>
-              <Col>
+              <Col sm={4}>
                 <select name="category" >
                   <option value="Appliance">Appliance</option>
                   <option value="Books">Books</option>
@@ -167,10 +167,10 @@ class PostModal extends React.Component {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Col>
-                <Label for="" sm={3}>Condition:</Label>
+              <Col sm={3}>
+                <Label >Condition:</Label>
               </Col>
-              <Col>
+              <Col sm={4}>
                 <select name="condition" >
                   <option value="Brand-New">Brand-New</option>
                   <option value="Like-New">Like-New</option>
@@ -181,10 +181,10 @@ class PostModal extends React.Component {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Col>
-                <Label for="" sm={3}>Price (US$):</Label>
+              <Col sm={3}>
+                <Label >Price (US$):</Label>
               </Col>
-              <Col>
+              <Col sm={4}>
                 <Input name="price" value={this.state.price} onChange={this.handlePriceChange} onBlur={this.onPriceBlur}  placeholder="price in USD" />
               </Col>
             </FormGroup>
@@ -195,10 +195,10 @@ class PostModal extends React.Component {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Col>
-                <Label for="" sm={3}>Zip:</Label>
+              <Col sm={3}>
+                <Label >Zip-code:</Label>
               </Col>
-              <Col>
+              <Col sm={4}>
                 <Input type="text" name="zipcode" placeholder="ex: 12345" />
               </Col>
             </FormGroup>
