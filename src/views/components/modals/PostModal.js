@@ -94,6 +94,7 @@ class PostModal extends React.Component {
           this.setState({
             imageURL: url
           });
+          console.log('url is saved');
         })
       });
     }

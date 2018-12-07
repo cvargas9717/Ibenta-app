@@ -69,7 +69,7 @@ app.post('/createListing', function (req, res) {
    Price: req.body.Price,
    Description: req.body.Description,
    Zipcode: req.body.Zipcode,
-   PictureURL: req.user,
+   PictureURL: req.body.PictureURL,
    Tags: req.body.Tags,
    SellerId: req.body.SellerId
  })

@@ -23,7 +23,7 @@ class HomePage extends Component {
         }
       })
       .then((jsonResult) =>{
-        const listingInfos = <Marketplace listingInfos={jsonResult} color={this.props.color}  alert={this.props.renderAlert} />;
+        const listingInfos = <Marketplace id="marketplace" listingInfos={jsonResult} color={this.props.color}  alert={this.props.renderAlert} />;
         this.setState({
           marketplace: listingInfos,
         });

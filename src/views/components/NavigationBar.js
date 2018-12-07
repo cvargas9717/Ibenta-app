@@ -84,7 +84,7 @@ class NavigationBar extends Component {
       window.location.replace(search);
     // })
 
-    // event.preventDefault();
+    event.preventDefault();
   }
 
   categoryChange = (event) => {
