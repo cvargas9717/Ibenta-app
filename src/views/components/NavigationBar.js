@@ -10,11 +10,7 @@ import { Collapse, Navbar,
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem, Col, Form, FormGroup, Label, Input, FormText, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+  Button } from 'reactstrap';
 
 class NavigationBar extends Component {
   constructor(props) {
@@ -27,8 +23,38 @@ class NavigationBar extends Component {
       signUpLabel: 'Sign Up',
       searchLabel: 'Search',
       uploadLabel: 'Post',
-      category: 'All Categories',
-      searchfield: ''
+      selectedCategory: 'All Categories',
+      searchfield: '',
+      categories: [
+        {
+          id: 0,
+          title: 'All Categories',
+        },
+        {
+          id: 1,
+          title: 'Appliance',
+        },
+        {
+          id: 2,
+          title: 'Books',
+        },
+        {
+          id: 3,
+          title: 'Clothing',
+        },
+        {
+          id: 4,
+          title: 'Electronics',
+        },
+        {
+          id: 5,
+          title: 'Video Games',
+        },
+        {
+          id: 6,
+          title: 'Other',
+        }
+      ]
     };
 
     this.openNav = this.openNav.bind(this);
@@ -60,36 +86,27 @@ class NavigationBar extends Component {
   }
 
   searchSubmit = (event) => {
-    console.log('searching for: ', this.state.searchfield + ' ' + this.state.category);
-    // fetch('http://localhost:8080/listingInfo')
-    // .then((result) => {
-    //   if(result.ok) {
-    //     return result.json();
-    //   } else {
-    //     return [];
-    //   }
+    console.log('searching for: ', this.state.searchfield + ' ' + this.state.selectedCategory);
+    let category = this.state.selectedCategory;
+    let keywords = this.state.searchfield;
+    let search = `/search?category=${category}&keywords=${keywords}`;
+    // this.props.history.push({
+    //   pathname: '/search',
+    //   //search: `?category=${category}?keywords=${keywords}`,
+    //   state: {category, keywords}
     // })
-    // .then((jsonResult) =>{
-      let category = this.state.category;
-      let keywords = this.state.searchfield;
-      let search = `/search?category=${category}&keywords=${keywords}`;
-      // this.props.history.push({
-      //   pathname: '/search',
-      //   //search: `?category=${category}?keywords=${keywords}`,
-      //   state: {category, keywords}
-      // })
-      // if (this.props.location.pathname === '/search') {
-      //   window.location.reload();
-      // }
-      window.location.replace(search);
-    // })
+    // if (this.props.location.pathname === '/search') {
+    //   window.location.reload();
+    // }
+    window.location.replace(search);
+  // })
 
     event.preventDefault();
   }
 
   categoryChange = (event) => {
     this.setState({
-      category: event.target.value
+      selectedCategory: event.target.textContent
     });
   }
 
@@ -103,8 +120,6 @@ class NavigationBar extends Component {
     const isLoggedIn = window.localStorage.getItem('isLoggedIn');
     const profilePicURL = window.localStorage.getItem('userProfilePicURL');
     const userId = window.localStorage.getItem('userId');
-    console.log(userId);
-    console.log(profilePicURL);
     console.log('user is logged in: ' + isLoggedIn);
     if (!isLoggedIn) {
       return (
@@ -112,7 +127,11 @@ class NavigationBar extends Component {
           <Navbar color="light" light expand="md">
             <NavbarBrand href="/">Ibenta</NavbarBrand>
             <NavbarToggler onClick={this.openNav} className="nav-toggler"/>
-            <Category onChange={this.categoryChange} />
+            <Category 
+              onChange={this.categoryChange} 
+              list={this.state.categories}
+              selectedCategory={this.state.selectedCategory}
+            />
             <SearchField onChange={this.updateSearchBar} searchSubmit={this.searchSubmit} />
             <Button onClick={this.searchSubmit} className="desktop-category">Go</Button>
             <Collapse isOpen={this.state.isOpen} navbar>
@@ -140,7 +159,11 @@ class NavigationBar extends Component {
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">Ibenta</NavbarBrand>
           <NavbarToggler onClick={this.openNav} className="nav-toggler"/>
-          <Category onChange={this.categoryChange} />
+          <Category 
+            onChange={this.categoryChange} 
+            list={this.state.categories}
+            selectedCategory={this.state.selectedCategory}
+          />          
           <SearchField searchSubmit={this.searchSubmit} onChange={this.updateSearchBar} />
           <Button onClick={this.searchSubmit} className="desktop-category">Go</Button>
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -151,7 +174,7 @@ class NavigationBar extends Component {
               </NavItem>
               <div className="divider" />
               <NavItem >
-                <Button color="info" onClick={this.logout} id="navitem">
+                <Button color="primary" onClick={this.logout} id="navitem">
                   {this.state.logoutLabel}
                 </Button>
               </NavItem>
