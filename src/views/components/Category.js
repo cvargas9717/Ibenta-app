@@ -19,7 +19,7 @@ class Category extends Component {
 
 	render() {
 		return (
-			<ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+			<ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className={this.props.className}>
 
 			<DropdownToggle caret color="info">
 				{this.props.selectedCategory}
@@ -28,8 +28,8 @@ class Category extends Component {
 			<DropdownMenu>
 				{this.props.list.map(element => {
 					return (
-						<DropdownItem 
-							id={element.id} 
+						<DropdownItem
+							id={element.id}
 							onClick={this.props.onChange}
 						>
 							{element.title}
@@ -38,7 +38,7 @@ class Category extends Component {
 				})
 				}
 			</DropdownMenu>
-			
+
 			</ButtonDropdown>
 		);
 	}

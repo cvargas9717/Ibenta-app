@@ -10,9 +10,12 @@ class SignUpModal extends Component {
   }
 
   render() {
+
+    const header = this.props.header;
+
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} className={this.props.className}>
-        <ModalHeader toggle={this.props.toggle}>Sign Up for Free!</ModalHeader>
+        <ModalHeader toggle={this.props.toggle}>{header}</ModalHeader>
         <ModalBody>
           <Form onSubmit={this.props.handleSubmit}>
 

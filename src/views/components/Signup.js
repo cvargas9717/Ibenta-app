@@ -60,7 +60,7 @@ class Signup extends Component {
         ProfilePic: image
       });
       const uploadTask = storage.ref(`profileImages/${image.name}`).put(image);
-      uploadTask.on('state_changed', 
+      uploadTask.on('state_changed',
       (snapshot) => {
         // progress function
       },
@@ -69,7 +69,7 @@ class Signup extends Component {
         console.log(error);
       },
       () => {
-        // complete function   
+        // complete function
         storage.ref('profileImages').child(image.name).getDownloadURL().then(url => {
           console.log(url);
           this.setState({
@@ -88,7 +88,7 @@ class Signup extends Component {
         GovernmentPic: image
       });
       const uploadTask = storage.ref(`governmentImages/${image.name}`).put(image);
-      uploadTask.on('state_changed', 
+      uploadTask.on('state_changed',
       (snapshot) => {
         // progress function
       },
@@ -97,7 +97,7 @@ class Signup extends Component {
         console.log(error);
       },
       () => {
-        // complete function   
+        // complete function
         storage.ref('governmentImages').child(image.name).getDownloadURL().then(url => {
           console.log(url);
           this.setState({
@@ -172,8 +172,9 @@ class Signup extends Component {
         handleGovernmentPicChange={this.handleGovernmentPicChange}
         handleProfilePicChange={this.handleProfilePicChange}
         userCreationStatus={this.state.status}
+        header={this.props.header}
       />
-      <Button color="success" onClick={this.toggle} id="navitem">
+    <Button color={this.props.color} onClick={this.toggle} id="navitem">
         {this.props.label}
       </Button>
 

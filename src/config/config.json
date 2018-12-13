@@ -2,7 +2,7 @@
   "development": {
     "username": "ctp_user",
     "password": "ctp_user",
-    "database": "Ibenta_development",
+    "database": "Ibenta-develop",
     "host": "127.0.0.1",
     "dialect": "postgresql"
   },

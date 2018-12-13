@@ -15,8 +15,8 @@ class Marketplace extends Component {
   componentDidMount() {
     const listingInfos = this.props.listingInfos.map((item) => {
       return (
-        <MarketplaceCard 
-          data={item} 
+        <MarketplaceCard
+          data={item}
           className="col-xs-3"
           width={"18rem"}
           height={"25rem"}

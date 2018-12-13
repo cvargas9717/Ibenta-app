@@ -85,12 +85,18 @@ code {
 
 .desktop-category {
   font-size: 115%;
+  /* border: 3px solid gray;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 4px;
+  background-color: gray;
+  color: white; */
 }
 
 .search-field {
   text-align: center;
   width: 50%;
-  margin-left: 5px;
+  margin-left: 0px;
 }
 
 .profile-pic {
@@ -129,10 +135,25 @@ code {
   width: 10%;
 }
 
+.white-text {
+  color: white;
+}
+
+.sidebar {
+  background-color: gray;
+}
+
+.sidebar-item {
+  margin: 5px;
+}
+
 @media only screen and (max-width: 600px) {
+
   .desktop-category {
     visibility: hidden;
     position: absolute;
+    width: 100%;
+    margin-bottom: -37px;
   }
 
   .search-field {
@@ -146,5 +167,9 @@ code {
     text-align: center;
     border-radius: 10px;
     width: 100%;
+  }
+
+  .sidebar {
+    visibility: hidden;
   }
 }

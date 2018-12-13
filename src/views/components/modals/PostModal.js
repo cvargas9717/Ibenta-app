@@ -77,7 +77,7 @@ class PostModal extends React.Component {
         image: image
       });
       const uploadTask = storage.ref(`listingImages/${image.name}`).put(image);
-      uploadTask.on('state_changed', 
+      uploadTask.on('state_changed',
       (snapshot) => {
         // progress function
         const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
@@ -88,7 +88,7 @@ class PostModal extends React.Component {
         console.log(error);
       },
       () => {
-        // complete function   
+        // complete function
         storage.ref('listingImages').child(`${image.name}`).getDownloadURL().then(url => {
           console.log(url);
           this.setState({
@@ -149,7 +149,7 @@ class PostModal extends React.Component {
             <FormGroup row>
               <Label for="" sm={3}>Subtitle</Label>
               <Col sm={10}>
-                <Input type="text" name="subtitle" />
+                <Input type="text" name="subtitle" placeholder="(Author, publisher, company, etc...)"/>
               </Col>
             </FormGroup>
             <FormGroup row>

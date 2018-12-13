@@ -127,10 +127,11 @@ class NavigationBar extends Component {
           <Navbar color="light" light expand="md">
             <NavbarBrand href="/">Ibenta</NavbarBrand>
             <NavbarToggler onClick={this.openNav} className="nav-toggler"/>
-            <Category 
-              onChange={this.categoryChange} 
+            <Category
+              onChange={this.categoryChange}
               list={this.state.categories}
               selectedCategory={this.state.selectedCategory}
+              className="desktop-category"
             />
             <SearchField onChange={this.updateSearchBar} searchSubmit={this.searchSubmit} />
             <Button onClick={this.searchSubmit} className="desktop-category">Go</Button>
@@ -138,7 +139,7 @@ class NavigationBar extends Component {
               <Nav className="ml-auto text-center" id="navbar" navbar>
                 <div className="divider" />
                 <NavItem >
-                  <Post label={this.state.uploadLabel} />
+                  <Signup label={this.state.uploadLabel} color="danger" header="Sign-up before you post an item!"/>
                 </NavItem>
                 <div className="divider" />
                 <NavItem >
@@ -146,7 +147,7 @@ class NavigationBar extends Component {
                 </NavItem>
                 <div className="divider" />
                 <NavItem >
-                  <Signup label={this.state.signUpLabel} />
+                  <Signup label={this.state.signUpLabel} color="success" header="Sign-up for free!"/>
                 </NavItem>
               </Nav>
             </Collapse>
@@ -159,11 +160,11 @@ class NavigationBar extends Component {
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">Ibenta</NavbarBrand>
           <NavbarToggler onClick={this.openNav} className="nav-toggler"/>
-          <Category 
-            onChange={this.categoryChange} 
+          <Category
+            onChange={this.categoryChange}
             list={this.state.categories}
             selectedCategory={this.state.selectedCategory}
-          />          
+          />
           <SearchField searchSubmit={this.searchSubmit} onChange={this.updateSearchBar} />
           <Button onClick={this.searchSubmit} className="desktop-category">Go</Button>
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -181,9 +182,9 @@ class NavigationBar extends Component {
               <div className="divider" />
               <NavItem id="navitem">
                 <a href={`/profile/${userId}`}>
-                  <img 
-                    src={profilePicURL} 
-                    className="super-small-profile-pic rounded-circle"  
+                  <img
+                    src={profilePicURL}
+                    className="super-small-profile-pic rounded-circle"
                   />
                 </a>
               </NavItem>
